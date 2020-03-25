@@ -9,9 +9,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.morning5.vocabularytrainer.adapters.OverviewAdapter;
 import com.morning5.vocabularytrainer.database.DbHelper;
-import com.morning5.vocabularytrainer.dto.TranslationContract;
+import com.morning5.vocabularytrainer.database.VocabularyData;
 import com.morning5.vocabularytrainer.dto.WordContract;
 
 import java.util.ArrayList;
@@ -26,8 +28,6 @@ public class OverviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-        Intent intent = getIntent();
-
         sqLiteDatabase = new DbHelper(getBaseContext()).getWritableDatabase();
 
         listView = findViewById(R.id.list_view_overview);
@@ -40,34 +40,20 @@ public class OverviewActivity extends AppCompatActivity {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME, null);
 
         if (cursor.getCount() == 0) {
-            showMessage("Error", "Nothing found");
+            Toast.makeText(this, "No data found!", Toast.LENGTH_LONG).show();
+            return;
         }
 
-        StringBuilder stringBuilder = new StringBuilder();
-
-        ArrayList<String> list = new ArrayList<String>();
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
+        ArrayList<VocabularyData> list = new ArrayList<VocabularyData>();
+        OverviewAdapter overviewAdapter = new OverviewAdapter(list, this);
 
         while (cursor.moveToNext()) {
-            /*stringBuilder.append("Id :").append(cursor.getString(0)).append("\n");
-            stringBuilder.append("Word :").append(cursor.getString(1)).append("\n");
-            stringBuilder.append("Language :").append(cursor.getString(2)).append("\n");*/
-
-            list.add(cursor.getString(1));
+            VocabularyData vocabularyData = new VocabularyData(cursor.getString(1), cursor.getString(2),cursor.getString(3),cursor.getString(4));
+            list.add(vocabularyData);
         }
-
-        //showMessage("Data", stringBuilder.toString());
 
         cursor.close();
 
-        listView.setAdapter(adapter);
-    }
-
-    private void showMessage(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
+        listView.setAdapter(overviewAdapter);
     }
 }

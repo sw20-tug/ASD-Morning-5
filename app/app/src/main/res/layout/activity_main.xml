@@ -7,11 +7,23 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/btn_overview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Overview"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="385dp" />
+        android:id="@+id/button_overview"
+        android:layout_width="121dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/button_overview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_add_word" />
+
+    <Button
+        android:id="@+id/button_add_word"
+        android:layout_width="121dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="328dp"
+        android:text="@string/button_add_vocabulary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
