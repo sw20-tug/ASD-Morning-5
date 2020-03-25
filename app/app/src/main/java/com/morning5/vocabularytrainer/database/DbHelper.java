@@ -11,8 +11,11 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "VocabularyTrainer.db";
 
-    private static final String SQL_DELETE_ENTRIES =
+    private static final String SQL_DELETE_WORD =
             "DROP TABLE IF EXISTS " + WordContract.Word.TABLE_NAME;
+
+    private static final String SQL_DELETE_TRANSLATION =
+            "DROP TABLE IF EXISTS " + TranslationContract.Translation.TABLE_NAME;
 
     private static final String SQL_CREATE_ENTRIES_WORD =
             "CREATE TABLE " + WordContract.Word.TABLE_NAME + " (" +
@@ -23,8 +26,11 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_ENTRIES_TRANSLATION =
             "CREATE TABLE " + TranslationContract.Translation.TABLE_NAME + " (" +
                     TranslationContract.Translation._ID + " INTEGER PRIMARY KEY," +
-                    TranslationContract.Translation.Origin + " INTEGER," +
-                    TranslationContract.Translation.Translation + " INTEGER)";
+                    TranslationContract.Translation.Origin + " INTEGER ," +
+                    TranslationContract.Translation.Translation + " INTEGER," +
+                    "FOREIGN KEY (" + TranslationContract.Translation.Origin + ") REFERENCES " + WordContract.Word.TABLE_NAME + " (" + WordContract.Word._ID + ")," +
+                    "FOREIGN KEY (" + TranslationContract.Translation.Translation + ") REFERENCES " + WordContract.Word.TABLE_NAME + " (" + WordContract.Word._ID + ")" +
+                    ")";
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -40,7 +46,8 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
-        db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL(SQL_DELETE_TRANSLATION);
+        db.execSQL(SQL_DELETE_WORD);
         onCreate(db);
     }
 }
