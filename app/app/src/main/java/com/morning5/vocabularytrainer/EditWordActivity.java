@@ -4,11 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.morning5.vocabularytrainer.database.DbHelper;
 import com.morning5.vocabularytrainer.dto.WordContract;
@@ -17,94 +22,58 @@ import java.util.ArrayList;
 
 public class EditWordActivity extends AppCompatActivity {
     SQLiteDatabase db;
-    ListView listView;
+
+    String new_word1;
+    String new_word2;
+
+    EditText inputWordLang1;
+    EditText inputWordLang2;
+
+    Button buttonSubmitChange;
+    Button buttonBackOverview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_word);
 
+        String d_word1 = getIntent().getStringExtra("GET_WORD1");
+        String d_word2 = getIntent().getStringExtra("GET_WORD2");
+
+        inputWordLang1 = (EditText) findViewById(R.id.inputWordLang1);
+        inputWordLang1.setHint(d_word1);
+
+        inputWordLang2 = (EditText) findViewById(R.id.inputWordLang2);
+        inputWordLang2.setHint(d_word2);
+        buttonSubmitChange = (Button) findViewById(R.id.buttonSubmitChange);
+        buttonBackOverview = (Button) findViewById(R.id.buttonBackOverview);
         db = new DbHelper(getBaseContext()).getWritableDatabase();
 
-        //ListView listView = (ListView) findViewById(R.id.list_view_overview);
+        buttonSubmitChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new_word1 = inputWordLang1.getText().toString();
+                new_word2 = inputWordLang2.getText().toString();
 
-        listView = (ListView)findViewById(R.id.listview_edit);
-        ArrayList<String> arrayList = new ArrayList<String>();
-        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
+                String d_id = getIntent().getStringExtra("GET_ID");
 
+                //Toast.makeText(getApplicationContext(),"Hello you called id " + d_id + " and have new words "+new_word1 + " " +new_word2,Toast.LENGTH_SHORT).show();
 
-        // Fetch data from database
-        Cursor cursor = db.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME, null);
+                // Update the database
+                ContentValues args = new ContentValues();
+                args.put(WordContract.Word.Word1, new_word1);
+                args.put(WordContract.Word.Word2, new_word2);
+                db.update(WordContract.Word.TABLE_NAME, args, "_id="+d_id, null);
+                Toast.makeText(getApplicationContext(),"Updated!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        if (cursor.getCount() == 0) {
-            showMessage("Error", "Nothing found");
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-        int i = 1;
-
-        ContentValues cv = new ContentValues();
-        cursor.moveToNext();
-        arrayList.add(cursor.getString(1));
-
-        cv.put(WordContract.Word._ID, 1);
-        cv.put(WordContract.Word.Word, "UPDATED_WORD"+i);
-        cv.put(WordContract.Word.Language, "UPDATED_LANG"+i);
-        //db.update(WordContract.Word.TABLE_NAME, cv, cursor.getString(0) + "= ",  { String.valueOf() });
-       /* while (cursor.moveToNext()) {
-            cv.put(WordContract.Word._ID, i);
-            cv.put(WordContract.Word.Word, "UPDATED_WORD"+i);
-            cv.put(WordContract.Word.Language, "UPDATED_LANG"+i);
-
-            //db.update(WordContract.Word.TABLE_NAME, cv, cursor.getString(0) + "=" + i, null);
-            arrayList.add(cursor.getString(1));
-            //stringBuilder.append("Id :").append(cursor.getString(0)).append("\n");
-            //stringBuilder.append("Word :").append(cursor.getString(1)).append("\n");
-            //stringBuilder.append("Language :").append(cursor.getString(2)).append("\n");
-
-            //list.add(cursor.getString(0));
-            i++;
-        }*/
-        //db.update(WordContract.Word.TABLE_NAME, cv, cursor.getString(0) + "=" + i, null);
-
-        //cv.put();
-        //WordContract.Word._ID
-
-        //arrayList.add("Hallo");
-        //arrayList.add("Translation");
-        //showVocabularies();
-        listView.setAdapter(arrayAdapter);
-        //ArrayAdapter adapter = new ArrayAdapter<String>(this, , list);
+        buttonBackOverview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EditWordActivity.this, OverviewActivity.class);
+                EditWordActivity.this.startActivity(intent);
+            }
+        });
     }
 
-
-    private void showVocabularies() {
-
-        Cursor cursor = db.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME, null);
-
-        if (cursor.getCount() == 0) {
-            showMessage("Error", "Nothing found");
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        while (cursor.moveToNext()) {
-            stringBuilder.append("Id :").append(cursor.getString(0)).append("\n");
-            stringBuilder.append("Word :").append(cursor.getString(1)).append("\n");
-            stringBuilder.append("Language :").append(cursor.getString(2)).append("\n");
-            //list.add(cursor.getString(0));
-        }
-
-        showMessage("Data", stringBuilder.toString());
-
-        cursor.close();
-    }
-
-    private void showMessage(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-
-    }
 }
