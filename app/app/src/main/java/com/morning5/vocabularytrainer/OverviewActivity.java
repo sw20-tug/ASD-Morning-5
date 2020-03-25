@@ -74,7 +74,7 @@ public class OverviewActivity extends AppCompatActivity {
         OverviewAdapter overviewAdapter = new OverviewAdapter(list, this);
 
         while (cursor.moveToNext()) {
-            VocabularyData vocabularyData = new VocabularyData(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(3),cursor.getString(4));
+            VocabularyData vocabularyData = new VocabularyData(cursor.getString(cursor.getColumnIndex(WordContract.Word._ID)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)));
             list.add(vocabularyData);
         }
 

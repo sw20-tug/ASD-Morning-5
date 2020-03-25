@@ -23,9 +23,6 @@ import java.util.ArrayList;
 public class EditWordActivity extends AppCompatActivity {
     SQLiteDatabase db;
 
-    String new_word1;
-    String new_word2;
-
     EditText inputWordLang1;
     EditText inputWordLang2;
 
@@ -51,8 +48,8 @@ public class EditWordActivity extends AppCompatActivity {
         buttonSubmitChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new_word1 = inputWordLang1.getText().toString();
-                new_word2 = inputWordLang2.getText().toString();
+                String new_word1 = inputWordLang1.getText().toString();
+                String new_word2 = inputWordLang2.getText().toString();
 
                 String d_id = getIntent().getStringExtra("GET_ID");
 
