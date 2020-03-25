@@ -1,20 +1,25 @@
 package com.morning5.vocabularytrainer;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.morning5.vocabularytrainer.database.DbHelper;
 import com.morning5.vocabularytrainer.dto.TranslationContract;
 import com.morning5.vocabularytrainer.dto.WordContract;
 
 public class AddWordActivity extends AppCompatActivity {
     SQLiteDatabase db;
+    Snackbar snackbar_success;
+    Snackbar snackbar_failure;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +28,19 @@ public class AddWordActivity extends AppCompatActivity {
         // Gets the data repository in write mode
 
         db = new DbHelper(getBaseContext()).getWritableDatabase();
+        snackbar_success = Snackbar.make(findViewById(R.id.myConstraintLayout), R.string.snackbar_success, Snackbar.LENGTH_LONG);
+        snackbar_failure = Snackbar.make(findViewById(R.id.myConstraintLayout), R.string.snackbar_fail, Snackbar.LENGTH_LONG);
+
     }
 
     public void onButtonClickAddWord(View v) {
+        // Get focus and hide keyboard
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
         String english = ((TextView) findViewById(R.id.editText_english)).getText().toString();
         String german = ((TextView) findViewById(R.id.editText_german)).getText().toString();
 
@@ -50,6 +65,7 @@ public class AddWordActivity extends AppCompatActivity {
 
         long translationId = db.insert(TranslationContract.Translation.TABLE_NAME, null, translationValues);
 
+        snackbar_success.show();
         System.out.println("[USER ASDM5] TranslationId " + translationId);
         Cursor c = db.rawQuery("SELECT * FROM " + TranslationContract.Translation.TABLE_NAME, null);
 
