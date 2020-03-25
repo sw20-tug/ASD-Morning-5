@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditWordActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="125dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout1"
+            android:layout_marginTop="21dp"
+            android:text="Enter your changes:"
+            />
+
+        <EditText
+            android:id="@+id/inputWordLang1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Word (Lang1)"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/inputWordLang2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Word (Lang2)"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/buttonSubmitChange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit" />
+
+        <Button
+            android:id="@+id/buttonBackOverview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back to Overview" />
+
+    </LinearLayout>
+
+</RelativeLayout>

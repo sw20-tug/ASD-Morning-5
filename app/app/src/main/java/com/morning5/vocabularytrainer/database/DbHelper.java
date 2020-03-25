@@ -15,7 +15,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public static final String SQL_CREATE_ENTRIES_WORD =
             "CREATE TABLE " + WordContract.Word.TABLE_NAME + "(" +
-                    WordContract.Word._ID + " int primary key, " +
+                    WordContract.Word._ID + " INTEGER primary key, " +
                     WordContract.Word.Word1 + " TEXT, " +
                     WordContract.Word.Language1 + " TEXT, " +
                     WordContract.Word.Word2 + " TEXT, " +
