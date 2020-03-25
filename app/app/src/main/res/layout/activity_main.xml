@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,24 +7,23 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button_add_word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="5dp"
-        android:onClick="onButtonClickSwitchToAddWord"
-        android:text="Add Vocabulary" />
+        android:id="@+id/button_overview"
+        android:layout_width="121dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/button_overview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_add_word" />
 
     <Button
-        android:id="@+id/button_edit_word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="104dp"
-        android:onClick="onButtonClickSwitchToEditWord"
-        android:text="Edit Vocabulary" />
-</RelativeLayout>
+        android:id="@+id/button_add_word"
+        android:layout_width="121dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="328dp"
+        android:text="@string/button_add_vocabulary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

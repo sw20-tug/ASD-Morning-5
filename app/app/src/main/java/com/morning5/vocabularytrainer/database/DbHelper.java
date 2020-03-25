@@ -4,32 +4,22 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.morning5.vocabularytrainer.dto.TranslationContract;
 import com.morning5.vocabularytrainer.dto.WordContract;
 
 public class DbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "VocabularyTrainer.db";
 
-    private static final String SQL_DELETE_WORD =
+    public static final String SQL_DELETE_WORD =
             "DROP TABLE IF EXISTS " + WordContract.Word.TABLE_NAME;
 
-    private static final String SQL_DELETE_TRANSLATION =
-            "DROP TABLE IF EXISTS " + TranslationContract.Translation.TABLE_NAME;
-
-    private static final String SQL_CREATE_ENTRIES_WORD =
-            "CREATE TABLE " + WordContract.Word.TABLE_NAME + " (" +
-                    WordContract.Word._ID + " INTEGER PRIMARY KEY," +
-                    WordContract.Word.Word + " TEXT," +
-                    WordContract.Word.Language + " TEXT)";
-
-    private static final String SQL_CREATE_ENTRIES_TRANSLATION =
-            "CREATE TABLE " + TranslationContract.Translation.TABLE_NAME + " (" +
-                    TranslationContract.Translation._ID + " INTEGER PRIMARY KEY," +
-                    TranslationContract.Translation.Origin + " INTEGER ," +
-                    TranslationContract.Translation.Translation + " INTEGER," +
-                    "FOREIGN KEY (" + TranslationContract.Translation.Origin + ") REFERENCES " + WordContract.Word.TABLE_NAME + " (" + WordContract.Word._ID + ")," +
-                    "FOREIGN KEY (" + TranslationContract.Translation.Translation + ") REFERENCES " + WordContract.Word.TABLE_NAME + " (" + WordContract.Word._ID + ")" +
+    public static final String SQL_CREATE_ENTRIES_WORD =
+            "CREATE TABLE " + WordContract.Word.TABLE_NAME + "(" +
+                    WordContract.Word._ID + " int primary key, " +
+                    WordContract.Word.Word1 + " TEXT, " +
+                    WordContract.Word.Language1 + " TEXT, " +
+                    WordContract.Word.Word2 + " TEXT, " +
+                    WordContract.Word.Language2 + " TEXT" +
                     ")";
 
     public DbHelper(Context context) {
@@ -39,14 +29,12 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES_WORD);
-        db.execSQL(SQL_CREATE_ENTRIES_TRANSLATION);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
-        db.execSQL(SQL_DELETE_TRANSLATION);
         db.execSQL(SQL_DELETE_WORD);
         onCreate(db);
     }
