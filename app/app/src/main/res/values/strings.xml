@@ -2,4 +2,6 @@
     <string name="app_name">Vocabulary Trainer</string>
     <string name="snackbar_success">Added successfully</string>
     <string name="snackbar_fail">Adding failed</string>
+    <string name="button_overview">Overview</string>
+    <string name="button_add_vocabulary">Add Vocabulary</string>
 </resources>

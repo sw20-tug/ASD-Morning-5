@@ -7,13 +7,23 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/button_overview"
+        android:layout_width="121dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/button_overview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_add_word" />
+
+    <Button
         android:id="@+id/button_add_word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="133dp"
-        android:layout_marginTop="88dp"
-        android:onClick="onButtonClickSwitchToAddWord"
-        android:text="Add Vocabulary"
+        android:layout_width="121dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="328dp"
+        android:text="@string/button_add_vocabulary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
