@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.morning5.vocabularytrainer.database.DbHelper;
-import com.morning5.vocabularytrainer.dto.TranslationContract;
 import com.morning5.vocabularytrainer.dto.WordContract;
 
 public class AddWordActivity extends AppCompatActivity {
@@ -38,7 +37,7 @@ public class AddWordActivity extends AppCompatActivity {
         // Get focus and hide keyboard
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
@@ -46,35 +45,24 @@ public class AddWordActivity extends AppCompatActivity {
         String german = ((TextView) findViewById(R.id.editText_german)).getText().toString();
 
         // Create a new map of values, where column names are the keys
-        ContentValues germanValues = new ContentValues();
-        germanValues.put(WordContract.Word.Word, german);
-        germanValues.put(WordContract.Word.Language, "German");
-
-        ContentValues englishValues = new ContentValues();
-        englishValues.put(WordContract.Word.Word, english);
-        englishValues.put(WordContract.Word.Language, "English");
+        ContentValues wordValues = new ContentValues();
+        wordValues.put(WordContract.Word.Word1, german);
+        wordValues.put(WordContract.Word.Language1, "German");
+        wordValues.put(WordContract.Word.Word2, english);
+        wordValues.put(WordContract.Word.Language2, "English");
 
         // Insert the new row, returning the primary key value of the new row
-        long germanId = db.insert(WordContract.Word.TABLE_NAME, null, germanValues);
-        long englishId = db.insert(WordContract.Word.TABLE_NAME, null, englishValues);
-        System.out.println("[USER ASDM5] germanId " + germanId);
-        System.out.println("[USER ASDM5] englishId " + englishId);
-
-        ContentValues translationValues = new ContentValues();
-        translationValues.put(TranslationContract.Translation.Origin, englishId);
-        translationValues.put(TranslationContract.Translation.Translation, germanId);
-
-        long translationId = db.insert(TranslationContract.Translation.TABLE_NAME, null, translationValues);
+        long wordId = db.insert(WordContract.Word.TABLE_NAME, null, wordValues);
+        System.out.println("[USER ASDM5] wordId " + wordId);
 
         snackbar_success.show();
-        System.out.println("[USER ASDM5] TranslationId " + translationId);
-        Cursor c = db.rawQuery("SELECT * FROM " + TranslationContract.Translation.TABLE_NAME, null);
+
+        Cursor c = db.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME, null);
 
         c.moveToFirst();
-        do
-        {
-            System.out.println("[USER ASDM5] Origin " + c.getString(c.getColumnIndex("Origin")));
-            System.out.println("[USER ASDM5] Translation " + c.getString(c.getColumnIndex("Translation")));
+        do {
+            System.out.println("[USER ASDM5] " + c.getString(c.getColumnIndex(WordContract.Word.Language1)) + " " + c.getString(c.getColumnIndex(WordContract.Word.Word1)));
+            System.out.println("[USER ASDM5] " + c.getString(c.getColumnIndex(WordContract.Word.Language2)) + " " + c.getString(c.getColumnIndex(WordContract.Word.Word2)));
         } while (c.moveToNext());
 
         c.close();

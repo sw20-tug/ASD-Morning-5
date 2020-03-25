@@ -8,7 +8,9 @@ public final class WordContract {
 
     public static class Word implements BaseColumns {
         public static final String TABLE_NAME = "Word";
-        public static final String Word = "Word";
-        public static final String Language = "Language";
+        public static final String Word1 = "WordOne";
+        public static final String Language1 = "LanguageOne";
+        public static final String Word2 = "WordTwo";
+        public static final String Language2 = "LanguageTwo";
     }
 }
