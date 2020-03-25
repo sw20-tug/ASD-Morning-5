@@ -10,8 +10,10 @@
         android:id="@+id/button_add_word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="88dp"
         android:onClick="onButtonClickSwitchToAddWord"
         android:text="Add Vocabulary"
-        tools:layout_editor_absoluteX="133dp"
-        tools:layout_editor_absoluteY="88dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

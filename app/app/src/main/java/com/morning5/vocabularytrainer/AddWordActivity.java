@@ -28,9 +28,10 @@ public class AddWordActivity extends AppCompatActivity {
         // Gets the data repository in write mode
 
         db = new DbHelper(getBaseContext()).getWritableDatabase();
-        snackbar_success = Snackbar.make(findViewById(R.id.myConstraintLayout), R.string.snackbar_success, Snackbar.LENGTH_LONG);
-        snackbar_failure = Snackbar.make(findViewById(R.id.myConstraintLayout), R.string.snackbar_fail, Snackbar.LENGTH_LONG);
 
+        View myAddWordLayout = findViewById(R.id.myAddWordLayout);
+        snackbar_success = Snackbar.make(myAddWordLayout, R.string.snackbar_success, Snackbar.LENGTH_LONG);
+        snackbar_failure = Snackbar.make(myAddWordLayout, R.string.snackbar_fail, Snackbar.LENGTH_LONG);
     }
 
     public void onButtonClickAddWord(View v) {
