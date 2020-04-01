@@ -3,6 +3,8 @@ package com.morning5.vocabularytrainer;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -18,9 +20,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StudyInterfaceActivity extends AppCompatActivity {
+public class StudyInterfaceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     SQLiteDatabase db;
     Spinner leftSpinner;
+    ArrayList<String> list = new ArrayList<>();
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,11 @@ public class StudyInterfaceActivity extends AppCompatActivity {
         db = new DbHelper(getBaseContext()).getReadableDatabase();
 
         leftSpinner = findViewById(R.id.spinner_language_left);
+        leftSpinner.setOnItemSelectedListener(this);
+        adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, list);
+        ((ListView) findViewById(R.id.list_view_study_interface)).setAdapter(adapter);
+
         setSpinners();
     }
 
@@ -77,10 +86,7 @@ public class StudyInterfaceActivity extends AppCompatActivity {
     }
 
     public void fillList() {
-        ArrayList<String> list = new ArrayList<>();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, list);
-
+        list.clear();
         String lang = leftSpinner.getSelectedItem().toString();
         Toast.makeText(this, lang, Toast.LENGTH_LONG).show();
         Cursor cursor = db.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME, null);
@@ -91,11 +97,28 @@ public class StudyInterfaceActivity extends AppCompatActivity {
         }
 
         while (cursor.moveToNext()) {
-            list.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)));
+            String lang1 = cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1));
+
+            if (lang.equals(lang1)) {
+                list.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)));
+            } else {
+                list.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)));
+            }
         }
 
         cursor.close();
 
-        ((ListView) findViewById(R.id.list_view_study_interface)).setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        fillList();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
