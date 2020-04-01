@@ -20,6 +20,7 @@ import com.morning5.vocabularytrainer.database.VocabularyData;
 import com.morning5.vocabularytrainer.dto.WordContract;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -100,22 +101,30 @@ public class OverviewActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case 0: // Filter_off
                 showVocabularies(0);
-                return true;
+                break;
             case R.id.sort1:
                 printToast("Sorting... A-Z [word1]");
                 Collections.sort(list, new VocabularyData.FirstWordSorter());
-                updateOverview();
-                return true;
+                break;
             case R.id.sort2:
                 printToast("Sorting... A-Z [word2]");
                 Collections.sort(list, new VocabularyData.SecondWordSorter());
-                updateOverview();
-                return true;
+                break;
+           case R.id.sort3:
+                printToast("Sorting... Z-A [word1]");
+                Collections.sort(list, Collections.reverseOrder(new VocabularyData.FirstWordSorter()));
+                break;
+            case R.id.sort4:
+                printToast("Sorting... Z-A [word2]");
+                Collections.sort(list, Collections.reverseOrder(new VocabularyData.SecondWordSorter()));
+                break;
             default:
                 if (map_languages.containsKey(item.getItemId()))
                     showVocabularies(item.getItemId());
                 return super.onOptionsItemSelected(item);
         }
+        updateOverview();
+        return true;
     }
 
     private void printToast(String msg)
@@ -132,8 +141,10 @@ public class OverviewActivity extends AppCompatActivity {
     private Cursor filterVocabulariesByLanguage(int filter_language_item_id)
     {
         Cursor cursor;
-        cursor = sqLiteDatabase.rawQuery("SELECT * FROM " +WordContract.Word.TABLE_NAME+ " WHERE " +WordContract.Word.Language1+ " = ?",
-                new String[]{map_languages.get(filter_language_item_id)});
+        String[] arr = new String[2];
+        Arrays.fill(arr, map_languages.get(filter_language_item_id));
+
+        cursor = sqLiteDatabase.rawQuery("SELECT * FROM " +WordContract.Word.TABLE_NAME+ " WHERE " +WordContract.Word.Language1+ " = ? OR " +WordContract.Word.Language2+ " = ?", arr);
 
         return cursor;
     }
