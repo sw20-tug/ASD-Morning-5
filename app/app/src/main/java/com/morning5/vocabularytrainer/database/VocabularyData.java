@@ -1,5 +1,7 @@
 package com.morning5.vocabularytrainer.database;
 
+import java.util.Comparator;
+
 public class VocabularyData {
 
     private String id;
@@ -35,4 +37,21 @@ public class VocabularyData {
     public String getLanguage2() {
         return language2;
     }
+
+    public static class FirstWordSorter implements Comparator<VocabularyData>
+    {
+        public int compare(VocabularyData o1, VocabularyData o2)
+        {
+            return o1.getWord1().compareToIgnoreCase(o2.getWord1());
+        }
+    }
+
+    public static class SecondWordSorter implements Comparator<VocabularyData>
+    {
+        public int compare(VocabularyData o1, VocabularyData o2)
+        {
+            return o1.getWord2().compareToIgnoreCase(o2.getWord2());
+        }
+    }
 }
+
