@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +24,8 @@ import java.util.Map;
 public class StudyInterfaceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     SQLiteDatabase db;
     Spinner leftSpinner;
-    ArrayList<String> list = new ArrayList<>();
+    List<String> listWords = new ArrayList<>();
+    HashMap<String, String> words = new HashMap<>();
     ArrayAdapter<String> adapter;
 
     @Override
@@ -34,10 +36,22 @@ public class StudyInterfaceActivity extends AppCompatActivity implements Adapter
         db = new DbHelper(getBaseContext()).getReadableDatabase();
 
         leftSpinner = findViewById(R.id.spinner_language_left);
+        final ListView listView = findViewById(R.id.list_view_study_interface);
+
         leftSpinner.setOnItemSelectedListener(this);
         adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, list);
-        ((ListView) findViewById(R.id.list_view_study_interface)).setAdapter(adapter);
+                android.R.layout.simple_list_item_1, listWords);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = (String) listView.getItemAtPosition(position);
+                String translation = words.get(item);
+
+                ((TextView) findViewById(R.id.text_view_study_interface)).setText(translation);
+            }
+        });
 
         setSpinners();
     }
@@ -81,12 +95,10 @@ public class StudyInterfaceActivity extends AppCompatActivity implements Adapter
 
         adapterRight.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rightSpinner.setAdapter(adapterRight);
-
-        fillList();
     }
 
     public void fillList() {
-        list.clear();
+        words.clear();
         String lang = leftSpinner.getSelectedItem().toString();
         Toast.makeText(this, lang, Toast.LENGTH_LONG).show();
         Cursor cursor = db.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME, null);
@@ -98,17 +110,20 @@ public class StudyInterfaceActivity extends AppCompatActivity implements Adapter
 
         while (cursor.moveToNext()) {
             String lang1 = cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1));
+            String word1 = cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1));
+            String word2 = cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2));
 
             if (lang.equals(lang1)) {
-                list.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)));
+                words.put(word1, word2);
             } else {
-                list.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)));
+                words.put(word2, word1);
             }
         }
 
         cursor.close();
 
-
+        listWords.clear();
+        listWords.addAll(words.keySet());
         adapter.notifyDataSetChanged();
     }
 
