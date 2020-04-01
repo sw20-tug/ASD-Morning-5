@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item android:id="@+id/filter"
         android:title="filter"
         app:showAsAction="always">
         <menu>
-            <item android:id="@+id/filter_english"
-                android:title="Filter by English"
-                android:orderInCategory="100"/>
-            <item android:id="@+id/filter_german"
-                android:title="Filter by German"
-                android:orderInCategory="100"/>
-            <item android:id="@+id/filter_off"
-                android:title="Filter OFF"
-                android:orderInCategory="100"/>
         </menu>
     </item>
     <item android:id="@+id/sort"
