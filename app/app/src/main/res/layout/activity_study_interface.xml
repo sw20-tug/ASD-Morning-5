@@ -10,35 +10,39 @@
         android:id="@+id/spinner_language_left"
         android:layout_width="160dp"
         android:layout_height="25dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinner_language_right"
         android:layout_width="160dp"
         android:layout_height="25dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/list_view_study_interface"
-        android:layout_width="180dp"
-        android:layout_height="600dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="160dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="45dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_view_study_interface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="414dp"
-        android:layout_marginEnd="110dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="25dp"
+        android:text="to"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/spinner_language_right"
+        app:layout_constraintStart_toEndOf="@+id/spinner_language_left"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
