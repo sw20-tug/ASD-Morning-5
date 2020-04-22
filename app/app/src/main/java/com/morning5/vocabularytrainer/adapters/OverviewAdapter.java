@@ -23,6 +23,7 @@ public class OverviewAdapter extends ArrayAdapter<VocabularyData> implements Vie
     private static class ViewHolder {
         TextView txt_word_1;
         TextView txt_word_2;
+        TextView tag;
     }
 
     public OverviewAdapter(ArrayList<VocabularyData> arrayList, Context context) {
@@ -52,6 +53,7 @@ public class OverviewAdapter extends ArrayAdapter<VocabularyData> implements Vie
             convertView = inflater.inflate(R.layout.overview_row_item, parent, false);
             viewHolder.txt_word_1 = (TextView) convertView.findViewById(R.id.word1);
             viewHolder.txt_word_2 = (TextView) convertView.findViewById(R.id.word2);
+            viewHolder.tag = (TextView) convertView.findViewById(R.id.tag);
 
             result = convertView;
 
@@ -64,6 +66,7 @@ public class OverviewAdapter extends ArrayAdapter<VocabularyData> implements Vie
 
         viewHolder.txt_word_1.setText(dataModel.getWord1());
         viewHolder.txt_word_2.setText(dataModel.getWord2());
+        viewHolder.tag.setText(dataModel.getTag());
         viewHolder.txt_word_1.setOnClickListener(this);
 
         return result;
