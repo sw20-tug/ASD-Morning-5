@@ -4,4 +4,7 @@
     <string name="snackbar_fail">Adding failed</string>
     <string name="button_overview">Overview</string>
     <string name="button_add_vocabulary">Add Vocabulary</string>
+    <string name="button_backup">Backup</string>
+    <string name="button_import">Import</string>
+    <string name="button_export">Export</string>
 </resources>

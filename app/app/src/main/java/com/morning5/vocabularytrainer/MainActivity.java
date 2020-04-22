@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button button_overview = findViewById(R.id.button_overview);
         Button button_add_word = findViewById(R.id.button_add_word);
+        Button button_backup = findViewById(R.id.button_backup);
 
         button_overview.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -27,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddWordActivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
+        button_backup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BackupActivity.class);
                 MainActivity.this.startActivity(intent);
             }
         });

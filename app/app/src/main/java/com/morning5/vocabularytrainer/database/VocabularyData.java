@@ -1,5 +1,10 @@
 package com.morning5.vocabularytrainer.database;
 
+import java.util.Comparator;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class VocabularyData {
 
     private String id;
@@ -34,5 +39,41 @@ public class VocabularyData {
 
     public String getLanguage2() {
         return language2;
+    }
+
+    public JSONObject toJSON() {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("id", getId());
+            jsonObject.put("word1", getWord1());
+            jsonObject.put("language1", getLanguage1());
+            jsonObject.put("word2", getWord2());
+            jsonObject.put("language2", getLanguage2());
+
+            return jsonObject;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static class FirstWordSorter implements Comparator<VocabularyData>
+    {
+        public int compare(VocabularyData o1, VocabularyData o2)
+        {
+            return o1.getWord1().compareToIgnoreCase(o2.getWord1());
+        }
+    }
+
+    public static class SecondWordSorter implements Comparator<VocabularyData>
+    {
+        public int compare(VocabularyData o1, VocabularyData o2)
+        {
+            return o1.getWord2().compareToIgnoreCase(o2.getWord2());
+        }
     }
 }
