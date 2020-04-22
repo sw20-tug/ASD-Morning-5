@@ -1,25 +1,13 @@
 package com.morning5.vocabularytrainer;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.morning5.vocabularytrainer.database.DbHelper;
-import com.morning5.vocabularytrainer.dto.WordContract;
-import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-    SQLiteDatabase db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(intent);
             }
         });
+    }
 
-        db = new DbHelper(getBaseContext()).getWritableDatabase();
+    public void onButtonClickStudyInterface(View v) {
+        Intent intent = new Intent(MainActivity.this, StudyInterfaceActivity.class);
+        MainActivity.this.startActivity(intent);
     }
 }

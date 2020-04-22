@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BackupActivity"></activity>
+        <activity android:name=".BackupActivity" />
         <activity android:name=".OverviewActivity" />
         <activity android:name=".EditWordActivity" />
         <activity android:name=".MainActivity">
@@ -22,7 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddWordActivity"></activity>
+        <activity android:name=".AddWordActivity" />
+        <activity android:name=".StudyInterfaceActivity" />
     </application>
 
 </manifest>
