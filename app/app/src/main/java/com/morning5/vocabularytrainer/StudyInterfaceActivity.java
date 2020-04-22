@@ -33,7 +33,7 @@ public class StudyInterfaceActivity extends AppCompatActivity implements Adapter
     List<String> listWords = new ArrayList<>();
     List<String> listSpinnerRight = new ArrayList<>();
     Map<String, String> languageRelations = new HashMap<>();
-    HashMap<String, String> words = new HashMap<>();
+    public static HashMap<String, String> words = new HashMap<>();
     ArrayAdapter<String> adapter;
     ArrayAdapter<String> adapterRight;
 
