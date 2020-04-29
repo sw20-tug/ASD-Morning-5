@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/filter"
+        android:title="filter"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/filterTag"
+                android:title="Tag"
+                app:showAsAction="always">
+                <menu>
+                </menu>
+            </item>
+            <item android:id="@+id/filterLanguage"
+                android:title="Language"
+                app:showAsAction="always">
+            <menu>
+            </menu>
+            </item>
+        </menu>
+    </item>
+    <item android:id="@+id/sort"
+        android:title="sort"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/sortLanguage"
+                android:title="Language"
+                app:showAsAction="always">
+                <menu>
+                        <item android:id="@+id/sort1"
+                            android:title="Sort A-Z [word1]"
+                            android:orderInCategory="100"/>
+                        <item android:id="@+id/sort2"
+                            android:title="Sort A-Z [word2]"
+                            android:orderInCategory="100"/>
+                        <item android:id="@+id/sort3"
+                            android:title="Sort Z-A [word1]"
+                            android:orderInCategory="100"/>
+                        <item android:id="@+id/sort4"
+                            android:title="Sort Z-A [word2]"
+                            android:orderInCategory="100"/>
+                </menu>
+            </item>
+            <item android:id="@+id/sortTag"
+                android:title="Tag"
+                app:showAsAction="always">
+                <menu>
+                    <item android:id="@+id/sortTag1"
+                        android:title="Sort A-Z"
+                        android:orderInCategory="100"/>
+                    <item android:id="@+id/sortTag2"
+                        android:title="Sort Z-A"
+                        android:orderInCategory="100"/>
+                </menu>
+            </item>
+        </menu>
+    </item>
+</menu>

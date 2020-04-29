@@ -22,7 +22,6 @@
         android:layout_height="52dp"
         android:layout_marginStart="132dp"
         android:layout_marginTop="328dp"
-
         android:text="@string/button_add_vocabulary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -56,5 +55,26 @@
         android:text="@string/button_change_language_EN"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_sturdy_interface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="260dp"
+        android:onClick="onButtonClickStudyInterface"
+        android:text="Study Interface"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_backup"
+        android:layout_width="121dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/button_backup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_overview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -89,6 +89,7 @@ public class AddWordActivity extends AppCompatActivity {
         wordValues.put(WordContract.Word.Language1, "German");
         wordValues.put(WordContract.Word.Word2, english);
         wordValues.put(WordContract.Word.Language2, "English");
+        wordValues.put(WordContract.Word.Tag, "easy");
 
         // Insert the new row, returning the primary key value of the new row
         long wordId = db.insert(WordContract.Word.TABLE_NAME, null, wordValues);

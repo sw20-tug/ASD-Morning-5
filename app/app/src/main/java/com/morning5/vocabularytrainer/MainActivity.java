@@ -2,7 +2,6 @@ package com.morning5.vocabularytrainer;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,11 +12,9 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 
-import com.morning5.vocabularytrainer.database.DbHelper;
-import com.morning5.vocabularytrainer.dto.WordContract;
-import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.morning5.vocabularytrainer.database.DbHelper;
 
 import java.util.Locale;
 
@@ -30,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         Button button_overview = findViewById(R.id.button_overview);
         Button button_add_word = findViewById(R.id.button_add_word);
+        Button button_backup = findViewById(R.id.button_backup);
         Button button_change_language_EN = findViewById(R.id.button_change_language_EN);
         Button button_change_language_DE = findViewById(R.id.button_change_language_DE);
         Button button_change_language_FR = findViewById(R.id.button_change_language_FR);
@@ -53,13 +50,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button_change_language_EN.setOnClickListener(new View.OnClickListener() {
+        button_backup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAppLocale("en");
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, BackupActivity.class);
+                MainActivity.this.startActivity(intent);
             }
         });
 
@@ -83,8 +78,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        button_change_language_EN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAppLocale("en");
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
 
-        db = new DbHelper(getBaseContext()).getWritableDatabase();
+    }
+
+    public void onButtonClickStudyInterface(View v) {
+        Intent intent = new Intent(MainActivity.this, StudyInterfaceActivity.class);
+        MainActivity.this.startActivity(intent);
+
+
+
+
+        //db = new DbHelper(getBaseContext()).getWritableDatabase();
     }
 
     @SuppressWarnings("deprecation")
