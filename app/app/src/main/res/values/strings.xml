@@ -15,8 +15,7 @@
     <string name="edit_word_hint_word_language_2">Language 2 (Word)</string>
     <string name="button_edit_word_submit">Submit</string>
     <string name="button_edit_word_back_to_overview">Back to Overview</string>
-
-
+    <string name="string_study_interface">Study interface</string>
     <string name="button_backup">Backup</string>
     <string name="button_import">Import</string>
     <string name="button_export">Export</string>
