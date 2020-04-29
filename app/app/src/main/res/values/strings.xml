@@ -4,6 +4,19 @@
     <string name="snackbar_fail">Adding failed</string>
     <string name="button_overview">Overview</string>
     <string name="button_add_vocabulary">Add Vocabulary</string>
+    <string name="button_change_language_EN">EN</string>
+    <string name="button_change_language_GR">DE</string>
+    <string name="button_change_language_FR">FR</string>
+    <string name="add_word_german_text">German</string>
+    <string name="add_word_english_text">English</string>
+    <string name="add_word_button">Add</string>
+    <string name="enter_your_changes">Enter your Changes</string>
+    <string name="edit_word_hint_word_language_1">Language 1 (Word)</string>
+    <string name="edit_word_hint_word_language_2">Language 2 (Word)</string>
+    <string name="button_edit_word_submit">Submit</string>
+    <string name="button_edit_word_back_to_overview">Back to Overview</string>
+
+
     <string name="button_backup">Backup</string>
     <string name="button_import">Import</string>
     <string name="button_export">Export</string>

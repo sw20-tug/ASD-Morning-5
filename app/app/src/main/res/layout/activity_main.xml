@@ -6,8 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/button_change_language_FR"
+        android:layout_width="45dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="365dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/button_change_language_FR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_change_language_DE"
+        android:layout_width="45dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/button_change_language_GR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_change_language_EN"
+        android:layout_width="45dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="275dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/button_change_language_EN"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +45,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <Button
             android:id="@+id/button_overview"
@@ -33,6 +64,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <Button
+            android:id="@+id/button_sturdy_interface"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="onButtonClickStudyInterface"
+            android:text="Study Interface"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/button_backup"
             android:layout_width="match_parent"
@@ -40,7 +81,8 @@
             android:text="@string/button_backup"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_overview" />
-    </LinearLayout>
 
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
