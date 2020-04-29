@@ -19,7 +19,8 @@ public class DbHelper extends SQLiteOpenHelper {
                     WordContract.Word.Word1 + " TEXT, " +
                     WordContract.Word.Language1 + " TEXT, " +
                     WordContract.Word.Word2 + " TEXT, " +
-                    WordContract.Word.Language2 + " TEXT" +
+                    WordContract.Word.Language2 + " TEXT," +
+                    WordContract.Word.Tag + " TEXT" +
                     ")";
 
     public DbHelper(Context context) {

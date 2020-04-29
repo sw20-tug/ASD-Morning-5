@@ -12,6 +12,8 @@ public class VocabularyData {
     private String language1;
     private String word2;
     private String language2;
+    private String tag;
+
 
     public VocabularyData(String id, String word1, String language1, String word2, String language2) {
         this.id = id;
@@ -19,6 +21,17 @@ public class VocabularyData {
         this.language1 = language1;
         this.word2 = word2;
         this.language2 = language2;
+
+    }
+
+    public VocabularyData(String id, String word1, String language1, String word2, String language2, String tag) {
+        this.id = id;
+        this.word1 = word1;
+        this.language1 = language1;
+        this.word2 = word2;
+        this.language2 = language2;
+        this.tag = tag;
+
     }
 
     public String getId() {
@@ -41,6 +54,8 @@ public class VocabularyData {
         return language2;
     }
 
+    public String getTag() { return tag;}
+
     public JSONObject toJSON() {
 
         JSONObject jsonObject = new JSONObject();
@@ -51,6 +66,7 @@ public class VocabularyData {
             jsonObject.put("language1", getLanguage1());
             jsonObject.put("word2", getWord2());
             jsonObject.put("language2", getLanguage2());
+            jsonObject.put("tag", getTag());
 
             return jsonObject;
         }
@@ -74,6 +90,14 @@ public class VocabularyData {
         public int compare(VocabularyData o1, VocabularyData o2)
         {
             return o1.getWord2().compareToIgnoreCase(o2.getWord2());
+        }
+    }
+
+    public static class TagSorter implements Comparator<VocabularyData>
+    {
+        public int compare(VocabularyData o1, VocabularyData o2)
+        {
+            return o1.getTag().compareToIgnoreCase(o2.tag);
         }
     }
 }

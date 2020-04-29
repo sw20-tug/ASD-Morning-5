@@ -12,5 +12,7 @@ public final class WordContract {
         public static final String Language1 = "LanguageOne";
         public static final String Word2 = "WordTwo";
         public static final String Language2 = "LanguageTwo";
+        public static final String Tag = "Tag";
+
     }
 }
