@@ -16,7 +16,7 @@
     <string name="button_edit_word_submit">Submit</string>
     <string name="button_edit_word_back_to_overview">Back to Overview</string>
 
-    button_edit_word_back_to_overview
+
     <string name="button_backup">Backup</string>
     <string name="button_import">Import</string>
     <string name="button_export">Export</string>

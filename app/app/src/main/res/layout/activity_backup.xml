@@ -6,23 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".BackupActivity">
 
-    <Button
-        android:id="@+id/button_import"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="321dp"
-        android:text="@string/button_import"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/button_export"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/button_export"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_import" />
+        <Button
+            android:id="@+id/button_import"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/button_import"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_export"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_export"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_import" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
