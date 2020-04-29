@@ -30,11 +30,11 @@ public class OverviewActivity extends AppCompatActivity {
 
     SQLiteDatabase sqLiteDatabase;
     ListView listView;
-    ArrayList<VocabularyData> list;
-    LinkedHashSet<String> different_languages;
+    ArrayList<VocabularyData> list = new ArrayList<VocabularyData>();;
+    LinkedHashSet<String> different_languages = new LinkedHashSet<String>();
     HashMap<Integer, String> map_languages;
     HashMap<Integer, String> map_tags;
-    LinkedHashSet<String> different_tags;
+    LinkedHashSet<String> different_tags = new LinkedHashSet<String>();
     int call_before;
 
     @Override
@@ -87,7 +87,7 @@ public class OverviewActivity extends AppCompatActivity {
         sub.clear();
         sub.add(0, 0, 0, "Filter OFF");
 
-        map_languages = new HashMap();
+        map_languages = new HashMap<Integer, String>();
         // iterate over our different languages1
         Iterator<String> itr = different_languages.iterator();
         int i = 1;
@@ -103,7 +103,7 @@ public class OverviewActivity extends AppCompatActivity {
         sub_tag.clear();
         sub_tag.add(0, 0, 0, "Filter OFF");
 
-        map_tags = new HashMap();
+        map_tags = new HashMap<Integer, String>();
         // iterate over our different languages1
         itr = different_tags.iterator();
         i = 1;
@@ -197,6 +197,10 @@ public class OverviewActivity extends AppCompatActivity {
 
     private void showVocabularies(int filter_item_id, int filter_type) {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME, null);
+        if (cursor.getCount() == 0) {
+            printToast("No data found!");
+            return;
+        }
         if(filter_type == 1) {
             printToast("Filter Language");
             cursor = filterVocabulariesByLanguage(filter_item_id);
@@ -204,10 +208,6 @@ public class OverviewActivity extends AppCompatActivity {
         else if(filter_type == 2) {
             printToast("Filter Tag");
             cursor = filterVocabulariesByTag(filter_item_id);
-        }
-        if (cursor.getCount() == 0) {
-            printToast("No data found!");
-            return;
         }
 
         list = new ArrayList<VocabularyData>();
