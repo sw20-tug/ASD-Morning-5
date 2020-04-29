@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Entraîneur de vocabulaire</string>
+    <string name="snackbar_success">Ajouté avec succès</string>
+    <string name="snackbar_fail">Échec de lajout</string>
+    <string name="button_overview">Aperçu</string>
+    <string name="button_add_vocabulary">Ajouter du vocabulaire</string>
+    <string name="button_change_language_EN">EN</string>
+    <string name="button_change_language_GR">DE</string>
+    <string name="button_change_language_FR">FR</string>
+    <string name="add_word_german_text">Allemande</string>
+    <string name="add_word_english_text">Anglaise</string>
+    <string name="add_word_button">Ajouter</string>
+    <string name="enter_your_changes">Entrez vos modifications</string>
+    <string name="edit_word_hint_word_language_1">Langue 1 (mot)</string>
+    <string name="edit_word_hint_word_language_2">Langue 2 (mot)</string>
+    <string name="button_edit_word_submit">Soumettre</string>
+    <string name="button_edit_word_back_to_overview">Retour à l\'aperçu</string>
+</resources>

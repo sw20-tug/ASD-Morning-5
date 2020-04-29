@@ -2,18 +2,24 @@ package com.morning5.vocabularytrainer;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.morning5.vocabularytrainer.database.DbHelper;
 import com.morning5.vocabularytrainer.dto.WordContract;
+
+import java.util.Locale;
 
 public class AddWordActivity extends AppCompatActivity {
     SQLiteDatabase db;
@@ -31,6 +37,39 @@ public class AddWordActivity extends AppCompatActivity {
         View myAddWordLayout = findViewById(R.id.myAddWordLayout);
         snackbar_success = Snackbar.make(myAddWordLayout, R.string.snackbar_success, Snackbar.LENGTH_LONG);
         snackbar_failure = Snackbar.make(myAddWordLayout, R.string.snackbar_fail, Snackbar.LENGTH_LONG);
+        Button button_change_language_EN = findViewById(R.id.button_change_language_EN);
+        Button button_change_language_DE = findViewById(R.id.button_change_language_DE);
+        Button button_change_language_FR = findViewById(R.id.button_change_language_FR);
+
+        button_change_language_EN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAppLocale("en");
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        button_change_language_DE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAppLocale("de");
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        button_change_language_FR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAppLocale("fr");
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
     }
 
     public void onButtonClickAddWord(View v) {
@@ -66,5 +105,15 @@ public class AddWordActivity extends AppCompatActivity {
         } while (c.moveToNext());
 
         c.close();
+    }
+
+    @SuppressWarnings("deprecation")
+    private void setAppLocale(String localeCode){
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.setLocale(new Locale(localeCode.toLowerCase()));
+        res.updateConfiguration(conf, dm);
+
     }
 }

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/linearLayout1"
             android:layout_marginTop="21dp"
-            android:text="Enter your changes:"
+            android:text="@string/enter_your_changes"
             />
 
         <EditText
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Word (Lang1)"
+            android:hint="@string/edit_word_hint_word_language_1"
             android:inputType="textPersonName" />
 
         <EditText
@@ -36,21 +36,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Word (Lang2)"
+            android:hint="@string/edit_word_hint_word_language_2"
             android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/buttonSubmitChange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit" />
+            android:text="@string/button_edit_word_submit" />
 
         <Button
             android:id="@+id/buttonBackOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Back to Overview" />
+            android:text="@string/button_edit_word_back_to_overview"/>
+
+
 
     </LinearLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <Button
+            android:id="@+id/button_change_language_FR"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="365dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/button_change_language_FR"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_change_language_DE"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="320dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/button_change_language_GR"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_change_language_EN"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="275dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/button_change_language_EN"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </RelativeLayout>
+
