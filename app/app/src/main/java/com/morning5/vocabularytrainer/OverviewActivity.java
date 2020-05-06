@@ -30,9 +30,12 @@ public class OverviewActivity extends AppCompatActivity {
 
     SQLiteDatabase sqLiteDatabase;
     ListView listView;
-    ArrayList<VocabularyData> list;
-    LinkedHashSet<String> different_languages;
+    ArrayList<VocabularyData> list = new ArrayList<VocabularyData>();;
+    LinkedHashSet<String> different_languages = new LinkedHashSet<String>();
     HashMap<Integer, String> map_languages;
+    HashMap<Integer, String> map_tags;
+    LinkedHashSet<String> different_tags = new LinkedHashSet<String>();
+    int call_before;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class OverviewActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.list_view_overview);
 
-        showVocabularies(0);
+        showVocabularies(0, 0);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -59,6 +62,7 @@ public class OverviewActivity extends AppCompatActivity {
                 intent.putExtra("GET_LANG2", d.getLanguage2());
                 intent.putExtra("GET_WORD1", d.getWord1());
                 intent.putExtra("GET_WORD2", d.getWord2());
+                intent.putExtra("GET_TAG", d.getTag());
 
                 Toast.makeText(getApplicationContext(),"Redirecting you to edit element with id: "+id,Toast.LENGTH_SHORT).show();
 
@@ -77,13 +81,13 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu)
     {
-        MenuItem item = menu.findItem(R.id.filter);
+        MenuItem item = menu.findItem(R.id.filterLanguage);
         SubMenu sub = item.getSubMenu();
 
         sub.clear();
         sub.add(0, 0, 0, "Filter OFF");
 
-        map_languages = new HashMap();
+        map_languages = new HashMap<Integer, String>();
         // iterate over our different languages1
         Iterator<String> itr = different_languages.iterator();
         int i = 1;
@@ -93,6 +97,23 @@ public class OverviewActivity extends AppCompatActivity {
             map_languages.put(i, lang);
             i++;
         }
+
+        MenuItem item_tag = menu.findItem(R.id.filterTag);
+        SubMenu sub_tag = item_tag.getSubMenu();
+        sub_tag.clear();
+        sub_tag.add(0, 0, 0, "Filter OFF");
+
+        map_tags = new HashMap<Integer, String>();
+        // iterate over our different languages1
+        itr = different_tags.iterator();
+        i = 1;
+        while(itr.hasNext()){
+            String tag = itr.next();
+            sub_tag.add(0, i, i, "Filter by " + tag);
+            map_tags.put(i, tag);
+            i++;
+        }
+
         return true;
     }
 
@@ -100,7 +121,7 @@ public class OverviewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 0: // Filter_off
-                showVocabularies(0);
+                showVocabularies(0, 0);
                 break;
             case R.id.sort1:
                 printToast("Sorting... A-Z [word1]");
@@ -118,9 +139,23 @@ public class OverviewActivity extends AppCompatActivity {
                 printToast("Sorting... Z-A [word2]");
                 Collections.sort(list, Collections.reverseOrder(new VocabularyData.SecondWordSorter()));
                 break;
+            case R.id.sortTag1:
+                printToast("Sorting... A-Z");
+                Collections.sort(list, new VocabularyData.TagSorter());
+                break;
+            case R.id.sortTag2:
+                printToast("Sorting... Z-A");
+                Collections.sort(list, Collections.reverseOrder(new VocabularyData.TagSorter()));
+                break;
             default:
-                if (map_languages.containsKey(item.getItemId()))
-                    showVocabularies(item.getItemId());
+                if (map_languages.containsKey(item.getItemId()) && call_before == R.id.filterLanguage) {
+                    showVocabularies(item.getItemId(), 1);
+                }
+                else if(map_tags.containsKey(item.getItemId()) && call_before == R.id.filterTag){
+                    showVocabularies(item.getItemId(), 2);
+
+            }
+                call_before = item.getItemId();
                 return super.onOptionsItemSelected(item);
         }
         updateOverview();
@@ -149,28 +184,46 @@ public class OverviewActivity extends AppCompatActivity {
         return cursor;
     }
 
-    private void showVocabularies(int filter_language_item_id) {
+    private Cursor filterVocabulariesByTag(int filter_tag_item_id)
+    {
+        Cursor cursor;
+        String[] arr = new String[1];
+        Arrays.fill(arr, map_tags.get(filter_tag_item_id));
+
+        cursor = sqLiteDatabase.rawQuery("SELECT * FROM " +WordContract.Word.TABLE_NAME+ " WHERE " +WordContract.Word.Tag+ " = ? ", arr);
+
+        return cursor;
+    }
+
+    private void showVocabularies(int filter_item_id, int filter_type) {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME, null);
-
-        if (filter_language_item_id != 0)   // usage of filter
-            cursor = filterVocabulariesByLanguage(filter_language_item_id);
-
         if (cursor.getCount() == 0) {
             printToast("No data found!");
             return;
+        }
+        if(filter_type == 1) {
+            printToast("Filter Language");
+            cursor = filterVocabulariesByLanguage(filter_item_id);
+        }
+        else if(filter_type == 2) {
+            printToast("Filter Tag");
+            cursor = filterVocabulariesByTag(filter_item_id);
         }
 
         list = new ArrayList<VocabularyData>();
         OverviewAdapter overviewAdapter = new OverviewAdapter(list, this);
 
         different_languages = new LinkedHashSet<String>();
+        different_tags = new LinkedHashSet<String>();
         while (cursor.moveToNext()) {
-            VocabularyData vocabularyData = new VocabularyData(cursor.getString(cursor.getColumnIndex(WordContract.Word._ID)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)));
+            VocabularyData vocabularyData = new VocabularyData(cursor.getString(cursor.getColumnIndex(WordContract.Word._ID)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Tag)));
             list.add(vocabularyData);
 
             // adding just first language to the different languages ?
             different_languages.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)));
             different_languages.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)));
+            different_tags.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Tag)));
+
         }
 
         cursor.close();
