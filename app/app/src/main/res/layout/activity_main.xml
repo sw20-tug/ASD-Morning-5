@@ -47,6 +47,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
+            android:id="@+id/button_advanced_testing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onButtonClickAdvancedTesting"
+            android:text="Advanced Testing" />
+
+        <Button
             android:id="@+id/button_overview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
