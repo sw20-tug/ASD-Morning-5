@@ -90,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onButtonClickAdvancedTesting(View v) {
+        Intent intent = new Intent(MainActivity.this, AdvancedTestingActivity.class);
+        MainActivity.this.startActivity(intent);
+    }
+
     public void onButtonClickStudyInterface(View v) {
         Intent intent = new Intent(MainActivity.this, StudyInterfaceActivity.class);
         MainActivity.this.startActivity(intent);
