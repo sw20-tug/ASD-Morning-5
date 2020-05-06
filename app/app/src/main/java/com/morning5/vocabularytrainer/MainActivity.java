@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         Button button_change_language_EN = findViewById(R.id.button_change_language_EN);
         Button button_change_language_DE = findViewById(R.id.button_change_language_DE);
         Button button_change_language_FR = findViewById(R.id.button_change_language_FR);
+        Button button_testing_mode = findViewById(R.id.button_testing_mode);
 
 
         button_overview.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
+            }
+        });
+
+        button_testing_mode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TestingModeActivity.class);
+                MainActivity.this.startActivity(intent);
             }
         });
 

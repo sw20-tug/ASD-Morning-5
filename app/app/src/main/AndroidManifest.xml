@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".AddWordActivity" />
         <activity android:name=".StudyInterfaceActivity" />
+        <activity android:name=".TestingModeActivity" />
     </application>
 
 </manifest>
