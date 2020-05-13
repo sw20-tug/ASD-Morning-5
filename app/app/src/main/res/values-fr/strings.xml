@@ -19,4 +19,8 @@
     <string name="button_backup">Sauvegarde</string>
     <string name="button_import">Importation</string>
     <string name="button_export">Exportation</string>
+    <string name="button_testing_mode">Mode test</string>
+    <string name="input_testing_word">votre contribution…</string>
+    <string name="button_testing_mode_word_submit">vérifier le mot</string>
+    <string name="button_testing_mode_next_word">mot suivant</string>
 </resources>
