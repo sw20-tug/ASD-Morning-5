@@ -1,5 +1,6 @@
 package com.morning5.vocabularytrainer;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -64,7 +65,9 @@ public class AdvancedTestingActivity extends AppCompatActivity implements Adapte
         // ToDo need Test Mode for this one
         // use the list "wordsToTest"
 
-
+        Intent intent = new Intent(AdvancedTestingActivity.this, TestingModeActivity.class);
+        intent.putExtra("WordsToTest", wordsToTest);
+        startActivity(intent);
 
     }
 
@@ -232,8 +235,9 @@ public class AdvancedTestingActivity extends AppCompatActivity implements Adapte
 
         for (int i = 0; i < sp.size(); i++) {
             if (sp.valueAt(i)) {
-                wordsToTest.add((VocabularyData) parent.getItemAtPosition(position));
+                wordsToTest.add((VocabularyData) listView.getItemAtPosition(i));
             }
+
         }
     }
 }
