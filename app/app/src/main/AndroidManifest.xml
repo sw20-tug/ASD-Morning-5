@@ -27,6 +27,7 @@
         <activity android:name=".EditWordActivity"></activity>
         <activity android:name=".OverviewActivity"></activity>
         <activity android:name=".BackupActivity" />
+        <activity android:name=".SelectWordsShareActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
