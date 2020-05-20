@@ -73,6 +73,14 @@
             android:text="Study Interface"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/button_share"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/button_share_vocabulary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <Button
             android:id="@+id/button_backup"
