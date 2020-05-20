@@ -37,7 +37,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,8 +44,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/button_advanced_testing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onButtonClickAdvancedTesting"
+            android:text="Advanced Testing" />
 
         <Button
             android:id="@+id/button_overview"
@@ -70,17 +75,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:onClick="onButtonClickStudyInterface"
-            android:text="Study Interface"
+            android:text="@string/string_study_interface"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        <Button
-            android:id="@+id/button_share"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/button_share_vocabulary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
 
         <Button
             android:id="@+id/button_backup"
@@ -90,6 +87,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_overview" />
 
+        <Button
+            android:id="@+id/button_testing_mode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/button_testing_mode"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_testing_mode" />
 
     </LinearLayout>
 

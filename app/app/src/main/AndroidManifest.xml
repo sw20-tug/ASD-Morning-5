@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -22,6 +23,10 @@
                 android:resource="@xml/filepaths" />
         </provider>
         <activity android:name=".ShareActivity"></activity>
+=======
+        <activity android:name=".TestingModeResultActivity"></activity>
+        <activity android:name=".AdvancedTestingActivity" />
+>>>>>>> fa659510792f79c42574e3d842af25e6b5e3dfbf
         <activity android:name=".EditWordActivity" />
         <activity android:name=".OverviewActivity" />
         <activity android:name=".BackupActivity" />
@@ -34,6 +39,7 @@
         </activity>
         <activity android:name=".AddWordActivity" />
         <activity android:name=".StudyInterfaceActivity" />
+        <activity android:name=".TestingModeActivity" />
     </application>
 
 </manifest>
