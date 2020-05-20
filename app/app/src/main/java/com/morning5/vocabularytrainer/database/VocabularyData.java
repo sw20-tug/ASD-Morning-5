@@ -1,11 +1,12 @@
 package com.morning5.vocabularytrainer.database;
 
-import java.util.Comparator;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VocabularyData {
+import java.io.Serializable;
+import java.util.Comparator;
+
+public class VocabularyData implements Serializable {
 
     private String id;
     private String word1;

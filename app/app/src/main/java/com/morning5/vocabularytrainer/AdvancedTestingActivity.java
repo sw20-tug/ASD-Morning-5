@@ -1,19 +1,22 @@
 package com.morning5.vocabularytrainer;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.morning5.vocabularytrainer.adapters.AdvancedTestingAdapter;
 import com.morning5.vocabularytrainer.adapters.OverviewAdapter;
 import com.morning5.vocabularytrainer.database.DbHelper;
 import com.morning5.vocabularytrainer.database.VocabularyData;
@@ -26,11 +29,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-public class OverviewActivity extends AppCompatActivity {
-
-    SQLiteDatabase sqLiteDatabase;
+public class AdvancedTestingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+    SQLiteDatabase db;
+    AdvancedTestingAdapter adapter;
+    ArrayList<VocabularyData> listWords = new ArrayList<>();
     ListView listView;
-    ArrayList<VocabularyData> list = new ArrayList<VocabularyData>();;
+    ArrayList<VocabularyData> wordsToTest = new ArrayList<>();
     LinkedHashSet<String> different_languages = new LinkedHashSet<String>();
     HashMap<Integer, String> map_languages;
     HashMap<Integer, String> map_tags;
@@ -40,42 +44,39 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_overview);
+        setContentView(R.layout.activity_advanced_testing);
 
-        sqLiteDatabase = new DbHelper(getBaseContext()).getWritableDatabase();
+        db = new DbHelper(getBaseContext()).getReadableDatabase();
 
-        listView = findViewById(R.id.list_view_overview);
+        listView = findViewById(R.id.listview_test);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        listView.setItemsCanFocus(false);
+        listView.setOnItemClickListener(this);
 
-        showVocabularies(0, 0);
+        adapter = new AdvancedTestingAdapter(getBaseContext(), listWords);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                Intent intent = new Intent(OverviewActivity.this, EditWordActivity.class);
+        listView.setAdapter(adapter);
 
-                VocabularyData d = list.get(position);
-
-                // transfer to the other activity
-                intent.putExtra("GET_ID", d.getId());
-                intent.putExtra("GET_LANG1", d.getLanguage1());
-                intent.putExtra("GET_LANG2", d.getLanguage2());
-                intent.putExtra("GET_WORD1", d.getWord1());
-                intent.putExtra("GET_WORD2", d.getWord2());
-                intent.putExtra("GET_TAG", d.getTag());
-
-                Toast.makeText(getApplicationContext(),"Redirecting you to edit element with id: "+id,Toast.LENGTH_SHORT).show();
-
-                startActivity(intent);
-            }
-        });
+        fillList(0,0);
     }
 
-    // Option Menu -> for filtering/sorting
+    public void onClickExecuteTests(View v) {
+        // ToDo need Test Mode for this one
+        // use the list "wordsToTest"
+
+
+
+    }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_sort_filter, menu);
         return true;
+    }
+
+    private void printToast(String msg)
+    {
+        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -117,60 +118,15 @@ public class OverviewActivity extends AppCompatActivity {
         return true;
     }
 
-    // check which option is selected
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case 0: // Filter_off
-                showVocabularies(0, 0);
-                break;
-            case R.id.sort1:
-                printToast("Sorting... A-Z [word1]");
-                Collections.sort(list, new VocabularyData.FirstWordSorter());
-                break;
-            case R.id.sort2:
-                printToast("Sorting... A-Z [word2]");
-                Collections.sort(list, new VocabularyData.SecondWordSorter());
-                break;
-           case R.id.sort3:
-                printToast("Sorting... Z-A [word1]");
-                Collections.sort(list, Collections.reverseOrder(new VocabularyData.FirstWordSorter()));
-                break;
-            case R.id.sort4:
-                printToast("Sorting... Z-A [word2]");
-                Collections.sort(list, Collections.reverseOrder(new VocabularyData.SecondWordSorter()));
-                break;
-            case R.id.sortTag1:
-                printToast("Sorting... A-Z");
-                Collections.sort(list, new VocabularyData.TagSorter());
-                break;
-            case R.id.sortTag2:
-                printToast("Sorting... Z-A");
-                Collections.sort(list, Collections.reverseOrder(new VocabularyData.TagSorter()));
-                break;
-            default:
-                if (map_languages.containsKey(item.getItemId()) && call_before == R.id.filterLanguage) {
-                    showVocabularies(item.getItemId(), 1);
-                }
-                else if(map_tags.containsKey(item.getItemId()) && call_before == R.id.filterTag){
-                    showVocabularies(item.getItemId(), 2);
-
-            }
-                call_before = item.getItemId();
-                return super.onOptionsItemSelected(item);
-        }
-        updateOverview();
-        return true;
-    }
-
-    private void printToast(String msg)
+    private Cursor filterVocabulariesByTag(int filter_tag_item_id)
     {
-        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
-    }
+        Cursor cursor;
+        String[] arr = new String[1];
+        Arrays.fill(arr, map_tags.get(filter_tag_item_id));
 
-    private void updateOverview()
-    {
-        OverviewAdapter overviewAdapter = new OverviewAdapter(list, this);
-        listView.setAdapter(overviewAdapter);
+        cursor = db.rawQuery("SELECT * FROM " +WordContract.Word.TABLE_NAME+ " WHERE " +WordContract.Word.Tag+ " = ? ", arr);
+
+        return cursor;
     }
 
     private Cursor filterVocabulariesByLanguage(int filter_language_item_id)
@@ -179,24 +135,61 @@ public class OverviewActivity extends AppCompatActivity {
         String[] arr = new String[2];
         Arrays.fill(arr, map_languages.get(filter_language_item_id));
 
-        cursor = sqLiteDatabase.rawQuery("SELECT * FROM " +WordContract.Word.TABLE_NAME+ " WHERE " +WordContract.Word.Language1+ " = ? OR " +WordContract.Word.Language2+ " = ?", arr);
+        cursor = db.rawQuery("SELECT * FROM " +WordContract.Word.TABLE_NAME+ " WHERE " +WordContract.Word.Language1+ " = ? OR " +WordContract.Word.Language2+ " = ?", arr);
 
         return cursor;
     }
 
-    private Cursor filterVocabulariesByTag(int filter_tag_item_id)
-    {
-        Cursor cursor;
-        String[] arr = new String[1];
-        Arrays.fill(arr, map_tags.get(filter_tag_item_id));
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 0: // Filter_off
+                fillList(0, 0);
+                break;
+            case R.id.sort1:
+                printToast("Sorting... A-Z [word1]");
+                Collections.sort(listWords, new VocabularyData.FirstWordSorter());
+                break;
+            case R.id.sort2:
+                printToast("Sorting... A-Z [word2]");
+                Collections.sort(listWords, new VocabularyData.SecondWordSorter());
+                break;
+            case R.id.sort3:
+                printToast("Sorting... Z-A [word1]");
+                Collections.sort(listWords, Collections.reverseOrder(new VocabularyData.FirstWordSorter()));
+                break;
+            case R.id.sort4:
+                printToast("Sorting... Z-A [word2]");
+                Collections.sort(listWords, Collections.reverseOrder(new VocabularyData.SecondWordSorter()));
+                break;
+            case R.id.sortTag1:
+                printToast("Sorting... A-Z");
+                Collections.sort(listWords, new VocabularyData.TagSorter());
+                break;
+            case R.id.sortTag2:
+                printToast("Sorting... Z-A");
+                Collections.sort(listWords, Collections.reverseOrder(new VocabularyData.TagSorter()));
+                break;
+            default:
+                if (map_languages.containsKey(item.getItemId()) && call_before == R.id.filterLanguage) {
+                    fillList(item.getItemId(), 1);
+                }
+                else if(map_tags.containsKey(item.getItemId()) && call_before == R.id.filterTag){
+                    fillList(item.getItemId(), 2);
 
-        cursor = sqLiteDatabase.rawQuery("SELECT * FROM " +WordContract.Word.TABLE_NAME+ " WHERE " +WordContract.Word.Tag+ " = ? ", arr);
-
-        return cursor;
+                }
+                call_before = item.getItemId();
+                return super.onOptionsItemSelected(item);
+        }
+        adapter.notifyDataSetChanged();
+        return true;
     }
 
-    private void showVocabularies(int filter_item_id, int filter_type) {
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME, null);
+    public void fillList(int filter_item_id, int filter_type) {
+        different_languages = new LinkedHashSet<String>();
+        different_tags = new LinkedHashSet<String>();
+        listWords.clear();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME, null);
+
         if (cursor.getCount() == 0) {
             printToast("No data found!");
             return;
@@ -210,23 +203,37 @@ public class OverviewActivity extends AppCompatActivity {
             cursor = filterVocabulariesByTag(filter_item_id);
         }
 
-        list = new ArrayList<VocabularyData>();
-        OverviewAdapter overviewAdapter = new OverviewAdapter(list, this);
-
-        different_languages = new LinkedHashSet<String>();
-        different_tags = new LinkedHashSet<String>();
         while (cursor.moveToNext()) {
-            VocabularyData vocabularyData = new VocabularyData(cursor.getString(cursor.getColumnIndex(WordContract.Word._ID)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Tag)));
-            list.add(vocabularyData);
+            VocabularyData vocabularyData = new VocabularyData(
+                    cursor.getString(cursor.getColumnIndex(WordContract.Word._ID)),
+                    cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)),
+                    cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)),
+                    cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)),
+                    cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)),
+                    cursor.getString(cursor.getColumnIndex(WordContract.Word.Tag)));
+            listWords.add(vocabularyData);
 
-            // adding just first language to the different languages ?
             different_languages.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)));
             different_languages.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)));
             different_tags.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Tag)));
-
         }
 
         cursor.close();
-        listView.setAdapter(overviewAdapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        wordsToTest.clear();
+        SparseBooleanArray sp = listView.getCheckedItemPositions();
+        CheckedTextView checkedTextView = view.findViewById(R.id.av_word2);
+
+        checkedTextView.setChecked(!checkedTextView.isChecked());
+
+        for (int i = 0; i < sp.size(); i++) {
+            if (sp.valueAt(i)) {
+                wordsToTest.add((VocabularyData) parent.getItemAtPosition(position));
+            }
+        }
     }
 }
