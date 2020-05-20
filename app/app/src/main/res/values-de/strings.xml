@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Vokalredakteur</string>
+    <string name="snackbar_success">Erfolgreich hinzugefügt</string>
+    <string name="snackbar_fail">Hinzufügen fehlgeschlagen</string>
+    <string name="button_overview">Überblick</string>
+    <string name="button_add_vocabulary">Wortschatz hinzufügen</string>
+    <string name="button_change_language_EN">EN</string>
+    <string name="button_change_language_GR">DE</string>
+    <string name="button_change_language_FR">FR</string>
+    <string name="add_word_german_text">Deutsch</string>
+    <string name="add_word_english_text">Englisch</string>
+    <string name="add_word_button">Hinzufügen</string>
+    <string name="enter_your_changes">Geben Sie Ihre Änderungen ein</string>
+    <string name="edit_word_hint_word_language_1">Sprache 1 (Wort)</string>
+    <string name="edit_word_hint_word_language_2">Sprache 2 (Wort)</string>
+    <string name="button_edit_word_submit">Einreichen</string>
+    <string name="button_edit_word_back_to_overview">Zurück zur Übersicht</string>
+    <string name="string_study_interface">Lernübersicht</string>
+    <string name="button_backup">Backup</string>
+    <string name="button_import">Importieren</string>
+    <string name="button_export">Exportieren</string>
+</resources>

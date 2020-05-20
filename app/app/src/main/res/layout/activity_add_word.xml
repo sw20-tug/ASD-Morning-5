@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/myAddWordLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <TableRow>
+        <TextView
+            android:id="@+id/textView_german"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_word_german_text"/>
+        <EditText
+            android:id="@+id/editText_german"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Hallo" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/textView_english"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_word_english_text" />
+
+        <EditText
+            android:id="@+id/editText_english"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Hello" />
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:onClick="onButtonClickAddWord"
+            android:text="@string/add_word_button" />
+    </TableRow>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <Button
+            android:id="@+id/button_change_language_FR"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="365dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/button_change_language_FR"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_change_language_DE"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="320dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/button_change_language_GR"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_change_language_EN"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="275dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/button_change_language_EN"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</TableLayout>
