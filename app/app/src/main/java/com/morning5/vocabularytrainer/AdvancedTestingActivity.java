@@ -235,7 +235,7 @@ public class AdvancedTestingActivity extends AppCompatActivity implements Adapte
 
         for (int i = 0; i < sp.size(); i++) {
             if (sp.valueAt(i)) {
-                wordsToTest.add((VocabularyData) listView.getItemAtPosition(i));
+                wordsToTest.add((VocabularyData) parent.getItemAtPosition(sp.keyAt(i)));
             }
 
         }
