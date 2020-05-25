@@ -12,6 +12,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.morning5.vocabularytrainer.adapters.OverviewAdapter;
@@ -85,7 +86,7 @@ public class OverviewActivity extends AppCompatActivity {
         SubMenu sub = item.getSubMenu();
 
         sub.clear();
-        sub.add(0, 0, 0, "Filter OFF");
+        sub.add(0, 0, 0, R.string.FilterOff);
 
         map_languages = new HashMap<Integer, String>();
         // iterate over our different languages1
@@ -93,7 +94,7 @@ public class OverviewActivity extends AppCompatActivity {
         int i = 1;
         while(itr.hasNext()){
             String lang = itr.next();
-            sub.add(0, i, i, "Filter by " + lang);
+            sub.add(0, i, i, getResources().getString(R.string.FilterBy) + " " + lang);
             map_languages.put(i, lang);
             i++;
         }
@@ -101,7 +102,7 @@ public class OverviewActivity extends AppCompatActivity {
         MenuItem item_tag = menu.findItem(R.id.filterTag);
         SubMenu sub_tag = item_tag.getSubMenu();
         sub_tag.clear();
-        sub_tag.add(0, 0, 0, "Filter OFF");
+        sub_tag.add(0, 0, 0, R.string.FilterOff);
 
         map_tags = new HashMap<Integer, String>();
         // iterate over our different languages1
@@ -109,7 +110,7 @@ public class OverviewActivity extends AppCompatActivity {
         i = 1;
         while(itr.hasNext()){
             String tag = itr.next();
-            sub_tag.add(0, i, i, "Filter by " + tag);
+            sub_tag.add(0, i, i, getResources().getString(R.string.FilterBy) + " " + tag);
             map_tags.put(i, tag);
             i++;
         }
