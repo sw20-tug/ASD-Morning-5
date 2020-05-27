@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.morning5.vocabularytrainer.database.VocabularyData;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ public class TestingModeResultActivity extends AppCompatActivity {
     TextView textView_accuracy;
     TextView textView_time;
     TextView[] textViewArray;
-
+    TextView[] textViewArray_second;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +31,18 @@ public class TestingModeResultActivity extends AppCompatActivity {
         textView_accuracy = findViewById(R.id.textView_accuracy);
         textView_time = findViewById(R.id.textView_time);
 
-        textViewArray = new TextView[3];
+        textViewArray = new TextView[5];
+        textViewArray_second = new TextView[3];
         int text_view_id;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 5; i++) {
             text_view_id = getResources().getIdentifier("textView_" + i, "id", getPackageName());
             textViewArray[i] = (TextView) findViewById(text_view_id);
+            if(i >= 2)
+            {
+                text_view_id = getResources().getIdentifier("textView_" + i + "_second", "id", getPackageName());
+                textViewArray_second[i-2] = (TextView) findViewById(text_view_id);
+            }
         }
 
         Intent intent = getIntent();
@@ -43,7 +50,7 @@ public class TestingModeResultActivity extends AppCompatActivity {
         HashMap<VocabularyData, Integer> testing_hash_map = (HashMap<VocabularyData, Integer>) intent.getSerializableExtra("testing_hash_map");
         double time = intent.getDoubleExtra("time", 0);
 
-        textView_time.setText("Your time: " + String.valueOf(time));
+        textView_time.setText("Time: " + String.valueOf(time)+ " sec");
 
         Map.Entry<VocabularyData, Integer> entry = testing_hash_map.entrySet().iterator().next();
 
@@ -65,10 +72,13 @@ public class TestingModeResultActivity extends AppCompatActivity {
 
         accuracy = ((double) hashMap.size() / try_sum) * 100;
 
-        textView_accuracy.setText("Your accuracy: " + String.format(Locale.getDefault(), "%.2f", accuracy));
+        textView_accuracy.setText("Accuracy: " + String.format(Locale.getDefault(), "%.2f", accuracy) + "%");
     }
 
     private void showWorstVocabularies(HashMap<VocabularyData, Integer> hashMap) {
+        // get the highest values (tries)
+        List<Integer> list_tries = new ArrayList<Integer>(hashMap.values());
+        Collections.sort(list_tries);
 
         List<VocabularyData> sorted_list = hashMap.entrySet().stream()
                 .sorted(Comparator.comparing(Map.Entry::getValue, Comparator.naturalOrder()))
@@ -84,8 +94,17 @@ public class TestingModeResultActivity extends AppCompatActivity {
         List<VocabularyData> worst_vocabularies = new ArrayList<VocabularyData>();
         worst_vocabularies = sorted_list.subList(sorted_list.size()-offset, sorted_list.size());
 
-        for (int i = offset-1; i >= 0; i--) {
-            textViewArray[i].setText(worst_vocabularies.get((offset-1)-i).getWord1());
+        List<Integer> top3 = list_tries.subList(list_tries.size()-offset, list_tries.size());
+
+        textViewArray[0].setText("Worst vocabularies:");
+        for (int i = offset+1; i > 1; i--) {
+            textViewArray[i].setText(worst_vocabularies.get((offset+1)-i).getWord1());
         }
+
+        for(int i = 0; i < offset; i++)
+        {
+            textViewArray_second[i].setText(String.valueOf(top3.get(offset-1-i)));
+        }
+
     }
 }

@@ -26,5 +26,7 @@
     <string name="button_testing_mode" >Testmodus</string>
     <string name="input_testing_word">Deine Eingabe</string>
     <string name="button_testing_mode_word_submit">Überprüfe</string>
-    <string name="button_testing_mode_next_word">Nächstes Wort</string>
+
+    <string name="testingmode_word"><u>Wort</u></string>
+    <string name="testingmode_tries"><u>Versuche</u></string>
 </resources>

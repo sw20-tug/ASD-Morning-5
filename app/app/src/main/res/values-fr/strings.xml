@@ -26,5 +26,7 @@
     <string name="button_testing_mode" >Mode test</string>
     <string name="input_testing_word">Votre contribution</string>
     <string name="button_testing_mode_word_submit">vérifier le mot</string>
-    <string name="button_testing_mode_next_word">mot suivant</string>
+
+    <string name="testingmode_word"><u>Mot</u></string>
+    <string name="testingmode_tries"><u>Essaie</u></string>
 </resources>

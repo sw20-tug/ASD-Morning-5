@@ -8,10 +8,12 @@ tools:context=".TestingModeResultActivity">
 
 <LinearLayout
     android:id="@+id/linearLayout"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
+    android:showDividers="middle"
+    android:divider="@drawable/divider8p"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -28,25 +30,67 @@ tools:context=".TestingModeResultActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="183dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000" />
 
     <TextView
         android:id="@+id/textView_0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="376dp" />
+        tools:layout_editor_absoluteY="500dp" />
 
-    <TextView
-        android:id="@+id/textView_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="410dp" />
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/table"
+        android:showDividers="middle"
+        android:layout_marginLeft="25dp"
 
-    <TextView
-        android:id="@+id/textView_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="445dp" />
+        android:divider="@drawable/divider8p"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="1">
+        <TableRow>
 
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/textView_1"
+                android:text="@string/testingmode_word"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/textView_1_second"
+                android:gravity="center"
+                android:text="@string/testingmode_tries"
+                android:padding="3dip" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/textView_2"
+                android:padding="3dip"/>
+            <TextView
+                android:id="@+id/textView_2_second"
+                android:gravity="center"
+                android:padding="3dip" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/textView_3"
+                android:padding="3dip"/>
+            <TextView
+                android:id="@+id/textView_3_second"
+                android:gravity="center"
+                android:padding="3dip" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/textView_4"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/textView_4_second"
+                android:gravity="center"
+                android:padding="3dip" />
+        </TableRow>
+    </TableLayout>
 </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
