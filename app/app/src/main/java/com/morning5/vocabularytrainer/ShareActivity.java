@@ -1,35 +1,37 @@
 package com.morning5.vocabularytrainer;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.LocaleList;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.morning5.vocabularytrainer.database.BackupHelper;
 import com.morning5.vocabularytrainer.database.DbHelper;
 import com.morning5.vocabularytrainer.dto.WordContract;
-
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.view.View;
-import android.widget.Button;
-import android.database.Cursor;
-
-import com.morning5.vocabularytrainer.database.BackupHelper;
-import com.morning5.vocabularytrainer.database.VocabularyData;
+import com.morning5.vocabularytrainer.wrappers.ContextLocalWrapper;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.HashMap;
-
-import android.widget.Toast;
-import android.database.sqlite.SQLiteDatabase;
+import java.util.Map;
 
 public class ShareActivity extends AppCompatActivity {
 
     SQLiteDatabase db;
     Map<String, String> vocabWords = new HashMap<>();
     BackupHelper backupHelper;
+
+    private static final String LANG = "lang";
+    private static String languageCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,12 @@ public class ShareActivity extends AppCompatActivity {
 
             vocabWords.put(word1, word2);
         }
-
         c.close();
+
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        LocaleList localeList = configuration.getLocales();
+        languageCode = localeList.get(0).toString();
     }
 
     public void onButtonClickAllWords(View v) {
@@ -75,5 +81,17 @@ public class ShareActivity extends AppCompatActivity {
     public void onButtonClickSomeWords(View v) {
         Intent intent = new Intent(ShareActivity.this, SelectWordsShareActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(LANG, languageCode);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextLocalWrapper.wrap(newBase, languageCode));
     }
 }

@@ -1,12 +1,17 @@
 package com.morning5.vocabularytrainer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.morning5.vocabularytrainer.database.VocabularyData;
+import com.morning5.vocabularytrainer.wrappers.ContextLocalWrapper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -21,6 +26,9 @@ public class TestingModeResultActivity extends AppCompatActivity {
     TextView textView_accuracy;
     TextView textView_time;
     TextView[] textViewArray;
+
+    private static final String LANG = "lang";
+    private static String languageCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,11 @@ public class TestingModeResultActivity extends AppCompatActivity {
 
         calculateAccuracy(testing_hash_map);
         showWorstVocabularies(testing_hash_map);
+
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        LocaleList localeList = configuration.getLocales();
+        languageCode = localeList.get(0).toString();
     }
 
     private void calculateAccuracy(HashMap<VocabularyData, Integer> hashMap) {
@@ -87,5 +100,17 @@ public class TestingModeResultActivity extends AppCompatActivity {
         for (int i = offset-1; i >= 0; i--) {
             textViewArray[i].setText(worst_vocabularies.get((offset-1)-i).getWord1());
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(LANG, languageCode);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextLocalWrapper.wrap(newBase, languageCode));
     }
 }

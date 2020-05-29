@@ -7,7 +7,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.os.LocaleList;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -17,19 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.morning5.vocabularytrainer.database.DbHelper;
 import com.morning5.vocabularytrainer.dto.WordContract;
-
-import java.util.Locale;
+import com.morning5.vocabularytrainer.wrappers.ContextLocalWrapper;
 
 public class AddWordActivity extends AppCompatActivity {
     SQLiteDatabase db;
     Snackbar snackbar_success;
     Snackbar snackbar_failure;
 
+    private static final String LANG = "lang";
+    private static String languageCode = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_word);
         // Gets the data repository in write mode
+
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        LocaleList localeList = configuration.getLocales();
+        languageCode = localeList.get(0).toString();
 
         db = new DbHelper(getBaseContext()).getWritableDatabase();
 
@@ -74,13 +81,15 @@ public class AddWordActivity extends AppCompatActivity {
         c.close();
     }
 
-    @SuppressWarnings("deprecation")
-    private void setAppLocale(String localeCode){
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.setLocale(new Locale(localeCode.toLowerCase()));
-        res.updateConfiguration(conf, dm);
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
+        outState.putString(LANG, languageCode);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextLocalWrapper.wrap(newBase, languageCode));
     }
 }

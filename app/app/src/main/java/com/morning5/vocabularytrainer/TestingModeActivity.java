@@ -1,9 +1,13 @@
 package com.morning5.vocabularytrainer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.morning5.vocabularytrainer.database.DbHelper;
 import com.morning5.vocabularytrainer.database.VocabularyData;
 import com.morning5.vocabularytrainer.dto.WordContract;
+import com.morning5.vocabularytrainer.wrappers.ContextLocalWrapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +40,9 @@ public class TestingModeActivity extends AppCompatActivity {
     long end_time;
 
     ArrayList<VocabularyData> wordsToTest = new ArrayList<>();
+
+    private static final String LANG = "lang";
+    private static String languageCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,11 @@ public class TestingModeActivity extends AppCompatActivity {
         Button buttonSubmitTestingWord = (Button)findViewById(R.id.buttonSubmitTestingWord);
 
         start_time = SystemClock.elapsedRealtime();
+
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        LocaleList localeList = configuration.getLocales();
+        languageCode = localeList.get(0).toString();
 
         buttonSubmitTestingWord.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,9 +158,7 @@ public class TestingModeActivity extends AppCompatActivity {
                 map_try_counter.put(vocabularyData, 0);
                 // adding just first language to the different languages ?
                 /* different_languages.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)));*/
-
             }
-
             cursor.close();
         }
         else{
@@ -156,9 +167,18 @@ public class TestingModeActivity extends AppCompatActivity {
                 testing_words_list.add(voc);
                 map_try_counter.put(voc, 0);
             }
-
-
         }
+    }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(LANG, languageCode);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextLocalWrapper.wrap(newBase, languageCode));
     }
 }
