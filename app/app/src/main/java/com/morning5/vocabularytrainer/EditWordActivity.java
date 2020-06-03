@@ -31,6 +31,7 @@ public class EditWordActivity extends AppCompatActivity {
 
     EditText inputWordLang1;
     EditText inputWordLang2;
+    EditText inputTag;
 
     Button buttonSubmitChange;
     Button buttonBackOverview;
@@ -47,12 +48,20 @@ public class EditWordActivity extends AppCompatActivity {
 
         String d_word1 = getIntent().getStringExtra("GET_WORD1");
         String d_word2 = getIntent().getStringExtra("GET_WORD2");
+        String tag = getIntent().getStringExtra("GET_TAG");
+
+        //Toast.makeText(getApplicationContext()," "+ d_word1 + d_word2 + tag, Toast.LENGTH_SHORT).show();
 
         inputWordLang1 = (EditText) findViewById(R.id.inputWordLang1);
         inputWordLang1.setHint(d_word1);
 
         inputWordLang2 = (EditText) findViewById(R.id.inputWordLang2);
         inputWordLang2.setHint(d_word2);
+
+        inputTag = (EditText) findViewById(R.id.inputTag);
+        inputTag.setHint(tag);
+
+
         buttonSubmitChange = (Button) findViewById(R.id.buttonSubmitChange);
         buttonBackOverview = (Button) findViewById(R.id.buttonBackOverview);
         db = new DbHelper(getBaseContext()).getWritableDatabase();
@@ -66,6 +75,7 @@ public class EditWordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String new_word1 = inputWordLang1.getText().toString();
                 String new_word2 = inputWordLang2.getText().toString();
+                String new_tag = inputTag.getText().toString();
 
                 String d_id = getIntent().getStringExtra("GET_ID");
 
@@ -75,6 +85,7 @@ public class EditWordActivity extends AppCompatActivity {
                 ContentValues args = new ContentValues();
                 args.put(WordContract.Word.Word1, new_word1);
                 args.put(WordContract.Word.Word2, new_word2);
+                args.put(WordContract.Word.Tag, new_tag);
                 db.update(WordContract.Word.TABLE_NAME, args, "_id="+d_id, null);
                 Toast.makeText(getApplicationContext(),"Updated!", Toast.LENGTH_SHORT).show();
             }

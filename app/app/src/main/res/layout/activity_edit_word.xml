@@ -39,6 +39,14 @@
             android:hint="@string/edit_word_hint_word_language_2"
             android:inputType="textPersonName" />
 
+        <EditText
+            android:id="@+id/inputTag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tag"
+            android:inputType="textPersonName" />
+
         <Button
             android:id="@+id/buttonSubmitChange"
             android:layout_width="match_parent"
