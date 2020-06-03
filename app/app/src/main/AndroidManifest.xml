@@ -12,11 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+        <activity android:name=".ShareActivity"></activity>
         <activity android:name=".TestingModeResultActivity"></activity>
         <activity android:name=".AdvancedTestingActivity" />
-        <activity android:name=".EditWordActivity" />
-        <activity android:name=".OverviewActivity" />
+        <activity android:name=".EditWordActivity"></activity>
+        <activity android:name=".OverviewActivity"></activity>
         <activity android:name=".BackupActivity" />
+        <activity android:name=".SelectWordsShareActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

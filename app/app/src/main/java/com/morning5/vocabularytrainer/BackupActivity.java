@@ -1,22 +1,26 @@
 package com.morning5.vocabularytrainer;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.LocaleList;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
-
 import com.morning5.vocabularytrainer.database.BackupHelper;
+import com.morning5.vocabularytrainer.wrappers.ContextLocalWrapper;
 
 public class BackupActivity extends AppCompatActivity {
 
@@ -27,9 +31,10 @@ public class BackupActivity extends AppCompatActivity {
     Button button_export;
     Button button_import;
 
-
-
     BackupHelper backupHelper;
+
+    private static final String LANG = "lang";
+    private static String languageCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,11 @@ public class BackupActivity extends AppCompatActivity {
         button_import = findViewById(R.id.button_import);
 
         backupHelper = new BackupHelper(getApplicationContext());
+
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        LocaleList localeList = configuration.getLocales();
+        languageCode = localeList.get(0).toString();
 
         button_export.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +77,7 @@ public class BackupActivity extends AppCompatActivity {
                         // result of the request.
                     }
                 } else {
-                    backupHelper.exportData();
+                    backupHelper.exportData("backup");
                     Toast.makeText(BackupActivity.this, "Exported", Toast.LENGTH_LONG).show();
                 }
             }
@@ -136,7 +146,7 @@ public class BackupActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    backupHelper.exportData();
+                    backupHelper.exportData("backup");
                     Toast.makeText(this, "Exported", Toast.LENGTH_LONG).show();
 
                 } else {
@@ -168,5 +178,17 @@ public class BackupActivity extends AppCompatActivity {
             // other 'case' lines to check for other
             // permissions this app might request.
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(LANG, languageCode);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextLocalWrapper.wrap(newBase, languageCode));
     }
 }

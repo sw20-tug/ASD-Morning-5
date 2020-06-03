@@ -63,43 +63,4 @@
             android:text="@string/add_word_button" />
     </TableRow>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
-
-        <Button
-            android:id="@+id/button_change_language_FR"
-            android:layout_width="45dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="365dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/button_change_language_FR"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button_change_language_DE"
-            android:layout_width="45dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="320dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/button_change_language_GR"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button_change_language_EN"
-            android:layout_width="45dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="275dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/button_change_language_EN"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
 </TableLayout>

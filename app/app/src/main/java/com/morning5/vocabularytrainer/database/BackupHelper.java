@@ -29,7 +29,7 @@ public class BackupHelper {
         this.sqLiteDatabase = new DbHelper(context).getWritableDatabase();
     }
 
-    public void exportData() {
+    public void exportData(String filename) {
 
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME, null);
 
@@ -41,7 +41,7 @@ public class BackupHelper {
         try {
             context.getApplicationContext();
 
-            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/backup.json";
+            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/"+filename+".json";
 
             FileOutputStream fos = new FileOutputStream(path);
 

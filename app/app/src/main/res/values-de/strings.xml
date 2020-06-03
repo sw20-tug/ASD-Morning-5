@@ -15,12 +15,16 @@
     <string name="edit_word_hint_word_language_2">Sprache 2 (Wort)</string>
     <string name="button_edit_word_submit">Einreichen</string>
     <string name="button_edit_word_back_to_overview">Zurück zur Übersicht</string>
+    <string name="button_share_vocabulary">Teilen</string>
+    <string name="button_all_vocabulary">Ganzer Wortschatz</string>
+    <string name="button_some_of_the_vocabulary">Teil des Wortschatzes</string>
+
     <string name="string_study_interface">Lernübersicht</string>
     <string name="button_backup">Backup</string>
     <string name="button_import">Importieren</string>
     <string name="button_export">Exportieren</string>
-    <string name="button_testing_mode">Testmodus</string>
-    <string name="input_testing_word">Deine Eingabe…</string>
+    <string name="button_testing_mode" >Testmodus</string>
+    <string name="input_testing_word">Deine Eingabe</string>
     <string name="button_testing_mode_word_submit">Überprüfe</string>
     <string name="button_testing_mode_next_word">Nächstes Wort</string>
 </resources>
