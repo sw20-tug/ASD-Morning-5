@@ -24,6 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center"
         android:onClick="onClickExecuteTests"
-        android:text="Start" />
+        android:text="@string/button_execute_test" />
 
 </LinearLayout>
