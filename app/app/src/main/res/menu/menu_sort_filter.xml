@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/filter"
-        android:title="filter"
+        android:title="@string/button_filter"
         app:showAsAction="always">
         <menu>
             <item android:id="@+id/filterTag"
-                android:title="Tag"
+                android:title="@string/button_filterTag"
                 app:showAsAction="always">
                 <menu>
                 </menu>
             </item>
             <item android:id="@+id/filterLanguage"
-                android:title="Language"
+                android:title="@string/button_filterLanguage"
                 app:showAsAction="always">
             <menu>
             </menu>
@@ -21,36 +21,36 @@
         </menu>
     </item>
     <item android:id="@+id/sort"
-        android:title="sort"
+        android:title="@string/button_sort"
         app:showAsAction="always">
         <menu>
             <item android:id="@+id/sortLanguage"
-                android:title="Language"
+                android:title="@string/button_language"
                 app:showAsAction="always">
                 <menu>
                         <item android:id="@+id/sort1"
-                            android:title="Sort A-Z [word1]"
+                            android:title="@string/button_sort1"
                             android:orderInCategory="100"/>
                         <item android:id="@+id/sort2"
-                            android:title="Sort A-Z [word2]"
+                            android:title="@string/button_sort2"
                             android:orderInCategory="100"/>
                         <item android:id="@+id/sort3"
-                            android:title="Sort Z-A [word1]"
+                            android:title="@string/button_sort3"
                             android:orderInCategory="100"/>
                         <item android:id="@+id/sort4"
-                            android:title="Sort Z-A [word2]"
+                            android:title="@string/button_sort4"
                             android:orderInCategory="100"/>
                 </menu>
             </item>
             <item android:id="@+id/sortTag"
-                android:title="Tag"
+                android:title="@string/button_sortTag"
                 app:showAsAction="always">
                 <menu>
                     <item android:id="@+id/sortTag1"
-                        android:title="Sort A-Z"
+                        android:title="@string/button_sortTag1"
                         android:orderInCategory="100"/>
                     <item android:id="@+id/sortTag2"
-                        android:title="Sort Z-A"
+                        android:title="@string/button_sortTag2"
                         android:orderInCategory="100"/>
                 </menu>
             </item>
