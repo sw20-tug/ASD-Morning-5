@@ -1,11 +1,15 @@
 package com.morning5.vocabularytrainer;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.LocaleList;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.morning5.vocabularytrainer.database.DbHelper;
 import com.morning5.vocabularytrainer.dto.WordContract;
+import com.morning5.vocabularytrainer.wrappers.ContextLocalWrapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,6 +42,9 @@ public class StudyInterfaceActivity extends AppCompatActivity implements Adapter
     ArrayAdapter<String> adapter;
     ArrayAdapter<String> adapterRight;
 
+    private static final String LANG = "lang";
+    private static String languageCode = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +61,11 @@ public class StudyInterfaceActivity extends AppCompatActivity implements Adapter
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, listWords);
         listView.setAdapter(adapter);
+
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        LocaleList localeList = configuration.getLocales();
+        languageCode = localeList.get(0).toString();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -181,5 +194,17 @@ public class StudyInterfaceActivity extends AppCompatActivity implements Adapter
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(LANG, languageCode);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextLocalWrapper.wrap(newBase, languageCode));
     }
 }

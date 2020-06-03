@@ -1,10 +1,13 @@
 package com.morning5.vocabularytrainer;
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,10 +17,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.morning5.vocabularytrainer.adapters.OverviewAdapter;
 import com.morning5.vocabularytrainer.database.DbHelper;
 import com.morning5.vocabularytrainer.database.VocabularyData;
 import com.morning5.vocabularytrainer.dto.WordContract;
+import com.morning5.vocabularytrainer.wrappers.ContextLocalWrapper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +43,9 @@ public class OverviewActivity extends AppCompatActivity {
     LinkedHashSet<String> different_tags = new LinkedHashSet<String>();
     int call_before;
 
+    private static final String LANG = "lang";
+    private static String languageCode = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +56,11 @@ public class OverviewActivity extends AppCompatActivity {
         listView = findViewById(R.id.list_view_overview);
 
         showVocabularies(0, 0);
+
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        LocaleList localeList = configuration.getLocales();
+        languageCode = localeList.get(0).toString();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -63,8 +77,6 @@ public class OverviewActivity extends AppCompatActivity {
                 intent.putExtra("GET_WORD1", d.getWord1());
                 intent.putExtra("GET_WORD2", d.getWord2());
                 intent.putExtra("GET_TAG", d.getTag());
-
-                Toast.makeText(getApplicationContext(),"Redirecting you to edit element with id: "+id,Toast.LENGTH_SHORT).show();
 
                 startActivity(intent);
             }
@@ -228,5 +240,17 @@ public class OverviewActivity extends AppCompatActivity {
 
         cursor.close();
         listView.setAdapter(overviewAdapter);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(LANG, languageCode);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextLocalWrapper.wrap(newBase, languageCode));
     }
 }
