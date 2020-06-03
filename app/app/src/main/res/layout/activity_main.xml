@@ -6,41 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button_change_language_EN"
-        android:layout_width="45dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/button_change_language_EN"
-        app:layout_constraintEnd_toStartOf="@+id/button_change_language_FR"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button_change_language_FR"
-        android:layout_width="45dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/button_change_language_FR"
-        app:layout_constraintEnd_toStartOf="@+id/button_change_language_DE"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/button_change_language_FR"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:text="@string/button_change_language_FR" />
 
-    <Button
-        android:id="@+id/button_change_language_DE"
-        android:layout_width="45dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/button_change_language_GR"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/button_change_language_DE"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="60dp"
+            android:text="@string/button_change_language_GR" />
+
+        <Button
+            android:id="@+id/button_change_language_EN"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="105dp"
+            android:text="@string/button_change_language_EN" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
