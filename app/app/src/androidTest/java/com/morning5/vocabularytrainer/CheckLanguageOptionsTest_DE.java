@@ -10,14 +10,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.TimeUnit;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -53,6 +53,6 @@ public class CheckLanguageOptionsTest_DE {
 
         //check if 2nd button is correct
         onView(withId(R.id.button_add_word))
-                .check(matches(withText("Wortschatz hinzufügen")));
+                .check(matches(withText("Vokabeln hinzufügen")));
     }
 }
