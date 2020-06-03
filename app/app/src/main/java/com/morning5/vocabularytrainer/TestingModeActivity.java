@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.morning5.vocabularytrainer.database.DbHelper;
 import com.morning5.vocabularytrainer.database.VocabularyData;
 import com.morning5.vocabularytrainer.dto.WordContract;
@@ -31,6 +31,10 @@ public class TestingModeActivity extends AppCompatActivity {
     int score;
     boolean game_won = false;
     HashMap<VocabularyData, Integer> map_try_counter; // counts how many tries till right
+    long start_time;
+    long end_time;
+
+    ArrayList<VocabularyData> wordsToTest = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +45,19 @@ public class TestingModeActivity extends AppCompatActivity {
         score = 0;
         db = new DbHelper(getBaseContext()).getWritableDatabase();
         //Button button_change_language_EN = findViewById(R.id.button_change_language_EN);
-        getVocabularies();
+        wordsToTest = (ArrayList<VocabularyData>) getIntent().getSerializableExtra("WordsToTest");
+        boolean adv = false;
+        if(wordsToTest != null) {
+            adv = true;
+        }
+
+        getVocabularies(adv);
         showNextWordToGuess();
 
+
         Button buttonSubmitTestingWord = (Button)findViewById(R.id.buttonSubmitTestingWord);
+
+        start_time = SystemClock.elapsedRealtime();
 
         buttonSubmitTestingWord.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,9 +70,17 @@ public class TestingModeActivity extends AppCompatActivity {
 
                 if(game_won)
                 {
+                    end_time = SystemClock.elapsedRealtime();
+                    long elapsedMilliSeconds = end_time - start_time;
+                    double elapsedSeconds = elapsedMilliSeconds / 1000.0;
+
                     // start new activity
                     printToast("Congratulations! King of Vocabulary! ;)");
-                    return;
+
+                    Intent intent = new Intent(TestingModeActivity.this, TestingModeResultActivity.class);
+                    intent.putExtra("testing_hash_map", map_try_counter);
+                    intent.putExtra("time", elapsedSeconds);
+                    startActivity(intent);
                 }
             }
 
@@ -80,7 +101,6 @@ public class TestingModeActivity extends AppCompatActivity {
 
     private boolean checkInput(String input_word)
     {
-        printToast("old size: "+testing_words_list.size());
         VocabularyData current_vocabulary = testing_words_list.get(0);
         String current_word_solution = current_vocabulary.getWord2();
         int value = map_try_counter.get(current_vocabulary);
@@ -88,6 +108,7 @@ public class TestingModeActivity extends AppCompatActivity {
         if (input_word.equalsIgnoreCase(current_word_solution))
         {
             printToast("You are right!");
+            editText_input_word.getText().clear();
             testing_words_list.remove(0);
             if (!testing_words_list.isEmpty()) {
                 showNextWordToGuess();
@@ -98,35 +119,46 @@ public class TestingModeActivity extends AppCompatActivity {
 
             printToast("Eww... Try again!");
         }
-        printToast("new size: "+testing_words_list.size());
         map_try_counter.put(current_vocabulary, ++value);
 
         return testing_words_list.isEmpty();
     }
 
-    private void getVocabularies() {
-        Cursor cursor = db.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME + " ORDER BY RANDOM() LIMIT 10", null);
-
-        if (cursor.getCount() == 0) {
-            printToast("No data found!");
-            return;
-        }
-
+    private void getVocabularies(boolean advanced) {
         testing_words_list = new ArrayList<VocabularyData>();
         map_try_counter = new HashMap<VocabularyData, Integer>();
-        while (cursor.moveToNext()) {
-            VocabularyData vocabularyData = new VocabularyData(cursor.getString(cursor.getColumnIndex(WordContract.Word._ID)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)));
+        if(!advanced) {
+            Cursor cursor = db.rawQuery("SELECT * FROM " + WordContract.Word.TABLE_NAME + " ORDER BY RANDOM() LIMIT 10", null);
 
-            //VocabularyData vocabularyData = new VocabularyData(cursor.getString(cursor.getColumnIndex(WordContract.Word._ID)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Tag)));
+            if (cursor.getCount() == 0) {
+                printToast("No data found!");
+                return;
+            }
 
-            testing_words_list.add(vocabularyData);
-            map_try_counter.put(vocabularyData, 0);
-            // adding just first language to the different languages ?
-           /* different_languages.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)));*/
+
+            while (cursor.moveToNext()) {
+                VocabularyData vocabularyData = new VocabularyData(cursor.getString(cursor.getColumnIndex(WordContract.Word._ID)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)));
+
+                //VocabularyData vocabularyData = new VocabularyData(cursor.getString(cursor.getColumnIndex(WordContract.Word._ID)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)),cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Tag)));
+
+                testing_words_list.add(vocabularyData);
+                map_try_counter.put(vocabularyData, 0);
+                // adding just first language to the different languages ?
+                /* different_languages.add(cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)));*/
+
+            }
+
+            cursor.close();
+        }
+        else{
+            for(int i = 0; i < wordsToTest.size(); i++){
+                VocabularyData voc = wordsToTest.get(i);
+                testing_words_list.add(voc);
+                map_try_counter.put(voc, 0);
+            }
+
 
         }
-
-        cursor.close();
 
     }
 }

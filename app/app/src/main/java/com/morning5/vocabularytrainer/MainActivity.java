@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         Button button_change_language_DE = findViewById(R.id.button_change_language_DE);
         Button button_change_language_FR = findViewById(R.id.button_change_language_FR);
         Button button_testing_mode = findViewById(R.id.button_testing_mode);
+        Button button_share = findViewById(R.id.button_share);
 
 
         button_overview.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BackupActivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
+        button_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ShareActivity.class);
                 MainActivity.this.startActivity(intent);
             }
         });

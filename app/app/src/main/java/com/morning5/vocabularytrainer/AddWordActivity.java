@@ -2,7 +2,6 @@ package com.morning5.vocabularytrainer;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -11,8 +10,8 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -37,39 +36,6 @@ public class AddWordActivity extends AppCompatActivity {
         View myAddWordLayout = findViewById(R.id.myAddWordLayout);
         snackbar_success = Snackbar.make(myAddWordLayout, R.string.snackbar_success, Snackbar.LENGTH_LONG);
         snackbar_failure = Snackbar.make(myAddWordLayout, R.string.snackbar_fail, Snackbar.LENGTH_LONG);
-        Button button_change_language_EN = findViewById(R.id.button_change_language_EN);
-        Button button_change_language_DE = findViewById(R.id.button_change_language_DE);
-        Button button_change_language_FR = findViewById(R.id.button_change_language_FR);
-
-        button_change_language_EN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setAppLocale("en");
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
-            }
-        });
-
-        button_change_language_DE.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setAppLocale("de");
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
-            }
-        });
-
-        button_change_language_FR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setAppLocale("fr");
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
-            }
-        });
     }
 
     public void onButtonClickAddWord(View v) {
@@ -89,7 +55,7 @@ public class AddWordActivity extends AppCompatActivity {
         wordValues.put(WordContract.Word.Language1, "German");
         wordValues.put(WordContract.Word.Word2, english);
         wordValues.put(WordContract.Word.Language2, "English");
-        wordValues.put(WordContract.Word.Tag, "easy");
+        wordValues.put(WordContract.Word.Tag, "hard");
 
         // Insert the new row, returning the primary key value of the new row
         long wordId = db.insert(WordContract.Word.TABLE_NAME, null, wordValues);

@@ -67,7 +67,7 @@ public class BackupActivity extends AppCompatActivity {
                         // result of the request.
                     }
                 } else {
-                    backupHelper.exportData();
+                    backupHelper.exportData("backup");
                     Toast.makeText(BackupActivity.this, "Exported", Toast.LENGTH_LONG).show();
                 }
             }
@@ -136,7 +136,7 @@ public class BackupActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    backupHelper.exportData();
+                    backupHelper.exportData("backup");
                     Toast.makeText(this, "Exported", Toast.LENGTH_LONG).show();
 
                 } else {
