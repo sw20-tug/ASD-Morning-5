@@ -42,12 +42,6 @@
             android:layout_height="wrap_content"
             android:text="@string/button_testing_mode_word_submit" />
 
-        <Button
-            android:id="@+id/buttonNextTestingWord"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_testing_mode_next_word" />
-
     </LinearLayout>
 
 </RelativeLayout>
