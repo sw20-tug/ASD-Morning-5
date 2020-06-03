@@ -49,7 +49,7 @@ public class BackupHelper {
             JSONArray jsonArray = new JSONArray();
 
             while (cursor.moveToNext()) {
-                VocabularyData vocabularyData = new VocabularyData(cursor.getString(cursor.getColumnIndex(WordContract.Word._ID)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)));
+                VocabularyData vocabularyData = new VocabularyData(cursor.getString(cursor.getColumnIndex(WordContract.Word._ID)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language1)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Word2)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Language2)), cursor.getString(cursor.getColumnIndex(WordContract.Word.Tag)));
                 jsonArray.put(vocabularyData.toJSON());
             }
 
@@ -76,6 +76,7 @@ public class BackupHelper {
                 wordValues.put(WordContract.Word.Language1, jsonObject.getString("language1"));
                 wordValues.put(WordContract.Word.Word2, jsonObject.getString("word2"));
                 wordValues.put(WordContract.Word.Language2, jsonObject.getString("language2"));
+                wordValues.put(WordContract.Word.Tag, jsonObject.getString("tag"));
 
                 long wordId = sqLiteDatabase.insert(WordContract.Word.TABLE_NAME, null, wordValues);
             }

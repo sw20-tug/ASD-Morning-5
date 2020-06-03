@@ -7,33 +7,33 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/button_change_language_EN"
+        android:layout_width="45dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/button_change_language_EN"
+        app:layout_constraintEnd_toStartOf="@+id/button_change_language_FR"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/button_change_language_FR"
         android:layout_width="45dp"
         android:layout_height="40dp"
-        android:layout_marginStart="365dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/button_change_language_FR"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_change_language_DE"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_change_language_DE"
         android:layout_width="45dp"
         android:layout_height="40dp"
-        android:layout_marginStart="320dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/button_change_language_GR"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_change_language_EN"
-        android:layout_width="45dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="275dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/button_change_language_EN"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onButtonClickAdvancedTesting"
-            android:text="Advanced Testing" />
+            android:text="@string/button_advanced_testing" />
 
         <Button
             android:id="@+id/button_overview"

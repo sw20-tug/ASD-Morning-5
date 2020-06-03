@@ -1,9 +1,13 @@
 package com.morning5.vocabularytrainer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,10 +22,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.morning5.vocabularytrainer.adapters.AdvancedTestingAdapter;
-import com.morning5.vocabularytrainer.adapters.OverviewAdapter;
 import com.morning5.vocabularytrainer.database.DbHelper;
 import com.morning5.vocabularytrainer.database.VocabularyData;
 import com.morning5.vocabularytrainer.dto.WordContract;
+import com.morning5.vocabularytrainer.wrappers.ContextLocalWrapper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +45,8 @@ public class AdvancedTestingActivity extends AppCompatActivity implements Adapte
     HashMap<Integer, String> map_tags;
     LinkedHashSet<String> different_tags = new LinkedHashSet<String>();
     int call_before;
+    private static final String LANG = "lang";
+    private static String languageCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,11 @@ public class AdvancedTestingActivity extends AppCompatActivity implements Adapte
         listView.setAdapter(adapter);
 
         fillList(0,0);
+
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        LocaleList localeList = configuration.getLocales();
+        languageCode = localeList.get(0).toString();
     }
 
     public void onClickExecuteTests(View v) {
@@ -239,5 +250,17 @@ public class AdvancedTestingActivity extends AppCompatActivity implements Adapte
             }
 
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(LANG, languageCode);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextLocalWrapper.wrap(newBase, languageCode));
     }
 }
