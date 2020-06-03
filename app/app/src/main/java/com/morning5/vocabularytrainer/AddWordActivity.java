@@ -55,6 +55,7 @@ public class AddWordActivity extends AppCompatActivity {
 
         String english = ((TextView) findViewById(R.id.editText_english)).getText().toString();
         String german = ((TextView) findViewById(R.id.editText_german)).getText().toString();
+        String tag = ((TextView) findViewById(R.id.editText_tag)).getText().toString();
 
         // Create a new map of values, where column names are the keys
         ContentValues wordValues = new ContentValues();
@@ -62,7 +63,7 @@ public class AddWordActivity extends AppCompatActivity {
         wordValues.put(WordContract.Word.Language1, "German");
         wordValues.put(WordContract.Word.Word2, english);
         wordValues.put(WordContract.Word.Language2, "English");
-        wordValues.put(WordContract.Word.Tag, "hard");
+        wordValues.put(WordContract.Word.Tag, tag);
 
         // Insert the new row, returning the primary key value of the new row
         long wordId = db.insert(WordContract.Word.TABLE_NAME, null, wordValues);

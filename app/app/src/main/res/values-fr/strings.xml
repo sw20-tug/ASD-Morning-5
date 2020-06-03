@@ -26,5 +26,26 @@
     <string name="button_testing_mode" >Mode test</string>
     <string name="input_testing_word">Votre contribution</string>
     <string name="button_testing_mode_word_submit">vérifier le mot</string>
+
+    <string name="testingmode_word"><u>Mot</u></string>
+    <string name="testingmode_tries"><u>Essaie</u></string>
+
     <string name="button_testing_mode_next_word">mot suivant</string>
+    <string name="button_advanced_testing">Tests avancés</string>
+    <string name="button_study_interface_to">à</string>
+    <string name="button_execute_test">Début</string>
+    <string name="button_sort">Trier</string>
+    <string name="button_language">Langue</string>
+    <string name="button_sort1">Trier A-Z [mot1]</string>
+    <string name="button_sort2">Trier A-Z [mot2]</string>
+    <string name="button_sort3">Trier Z-A [mot1]</string>
+    <string name="button_sort4">Trier Z-A [mot2]</string>
+    <string name="button_sortTag">étiquette</string>
+    <string name="button_sortTag1">Trier A-Z</string>
+    <string name="button_sortTag2">Trier Z-A</string>
+    <string name="button_filterLanguage">Langue</string>
+    <string name="button_filterTag">étiquette</string>
+    <string name="button_filter">Filtre</string>
+    <string name="FilterOff">Filtrer</string>
+    <string name="FilterBy">Filtrer par </string>
 </resources>
